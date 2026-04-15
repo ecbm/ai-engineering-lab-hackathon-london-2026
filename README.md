@@ -114,7 +114,6 @@ This workshop includes:
 
 - `README.md` (this file) — overview and day structure
 - `SETUP-GUIDE.md` — what to do before the event
-- `participant-handout.md` — quick reference for the day
 - `open-brief.md` — guidance for teams bringing their own problem, including prompts to frame and scope it
 - `challenge-01-from-pdf-to-digital-service.md` — detailed brief, data, and prompts for challenge 1
 - `challenge-1/FORM-LIC-001-licence-application.pdf` — sample licence application PDF for challenge 1
@@ -122,12 +121,6 @@ This workshop includes:
 - `challenge-2/` — starter data for challenge 2: `structured_files/` (text-based documents) and `unstructured_files/` (binary-format documents)
 - `challenge-03-supporting-casework-decisions.md` — detailed brief, data, and prompts for challenge 3
 - `challenge-04-knowing-your-own-organisation.md` — detailed brief, data, and prompts for challenge 4
-
-## Feedback survey
-
-Please complete the feedback survey at the end of the day. The survey link and QR code will be displayed on screen at the close of the event. You can also access it here:
-
-[AI Engineering Lab hackathon feedback survey](insert-survey-url)
 
 ---
 Version: 1.0
