@@ -1,82 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="govuk-template">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1d70b8">
 <title>Team Leader Overview — CaseTracker</title>
-<link rel="stylesheet" href="styles.css">
-<style>
-.stats-row { display: flex; gap: 15px; margin-bottom: 30px; flex-wrap: wrap; }
-.stat-box { background: #fff; padding: 15px 20px; text-align: center; border-bottom: 4px solid #1d70b8; flex: 1; min-width: 100px; }
-.stat-box__number { font-size: 48px; font-weight: 700; line-height: 1; }
-.stat-box__label { font-size: 16px; color: #505a5f; margin-top: 5px; }
-.stat-box--red { border-bottom-color: #d4351c; }
-.stat-box--orange { border-bottom-color: #b84c00; }
-.stat-box--green { border-bottom-color: #00703c; }
-.stat-box--purple { border-bottom-color: #4c2c92; }
-
-.team-section { margin-bottom: 40px; }
-.team-heading { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 10px; }
-
-.risk-table td, .risk-table th { font-size: 16px; }
-.risk-high { color: #942514; font-weight: 700; }
-.risk-medium { color: #6e3619; font-weight: 700; }
-
-.bar-chart { margin-bottom: 30px; }
-.bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
-.bar-label { flex: 0 0 160px; font-size: 16px; font-weight: 700; text-align: right; }
-.bar-track { flex: 1; background: #f3f2f1; height: 28px; position: relative; }
-.bar-fill { height: 100%; display: flex; align-items: center; padding-left: 8px; font-size: 14px; font-weight: 700; color: #fff; min-width: 28px; }
-.bar-fill--red { background: #d4351c; }
-.bar-fill--orange { background: #b84c00; }
-.bar-fill--blue { background: #1d70b8; }
-.bar-fill--purple { background: #4c2c92; }
-.bar-fill--green { background: #00703c; }
-.bar-fill--grey { background: #505a5f; }
-
-.deadline-card { background: #fff; padding: 15px 20px; margin-bottom: 10px; border-left: 5px solid #b1b4b6; }
-.deadline-card--breach { border-left-color: #d4351c; background: #fef0ee; }
-.deadline-card--warning { border-left-color: #b84c00; background: #fff7f0; }
-.deadline-card__header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
-.deadline-card__case { font-weight: 700; }
-.deadline-card__detail { font-size: 16px; color: #505a5f; margin-top: 4px; }
-
-.capacity-row { display: flex; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; }
-.capacity-card { background: #fff; flex: 1; min-width: 200px; padding: 15px 20px; border-top: 4px solid #1d70b8; }
-.capacity-card__team { font-size: 19px; font-weight: 700; margin-bottom: 5px; }
-.capacity-card__count { font-size: 36px; font-weight: 700; line-height: 1; }
-.capacity-card__breakdown { font-size: 14px; color: #505a5f; margin-top: 5px; }
-.capacity-card--pressure { border-top-color: #d4351c; }
-
-.notification-banner { border: 5px solid #d4351c; padding: 0; margin-bottom: 30px; background: #fff; }
-.notification-banner__header { background: #d4351c; color: #fff; padding: 8px 15px; font-weight: 700; font-size: 16px; }
-.notification-banner__body { padding: 15px; }
-.notification-banner__body p { margin: 0 0 5px; }
-.notification-banner__body ul { margin: 5px 0 0 20px; }
-.notification-banner__body li { margin-bottom: 5px; }
-
-/* Responsive table wrapper (1.4.10 Reflow) */
-.table-responsive { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 30px; }
-.table-responsive:focus { outline: 3px solid #ffdd00; }
-.table-responsive .govuk-table { margin-bottom: 0; }
-
-/* Bar chart as table */
-table.bar-chart { width: 100%; border-collapse: collapse; margin-bottom: 30px; border: none; }
-table.bar-chart th, table.bar-chart td { border: none; padding: 4px 0; }
-table.bar-chart tr:hover { background: transparent; }
-</style>
+<link rel="icon" sizes="48x48" href="../static/assets/images/favicon.ico">
+<link rel="stylesheet" href="../static/govuk-frontend.min.css">
+<link rel="stylesheet" href="../static/styles.css">
 </head>
-<body>
+<body class="govuk-template__body">
+<script>document.body.className += ' js-enabled' + ('noModule' in HTMLScriptElement.prototype ? ' govuk-frontend-supported' : '');</script>
 
-<a href="#main-content" class="skip-link">Skip to main content</a>
+<a href="#main-content" class="govuk-skip-link" data-module="govuk-skip-link">Skip to main content</a>
 
-<header class="govuk-header" role="banner">
-<div class="govuk-header__container">
-<a href="dashboard.html" class="govuk-header__logo">CaseTracker</a>
-<nav class="govuk-header__nav" aria-label="Main navigation">
-<a href="dashboard.html">Dashboard</a>
-<a href="team-leader.html" aria-current="page">Team view</a>
-<a href="applicant.html">Applicant portal</a>
+<header class="govuk-header" data-module="govuk-header" role="banner">
+<div class="govuk-header__container govuk-width-container">
+<div class="govuk-header__logo">
+<a href="dashboard.html" class="govuk-header__link govuk-header__link--homepage">
+<span class="govuk-header__logotype-text">CaseTracker</span>
+</a>
+</div>
+<div class="govuk-header__content">
+<nav aria-label="Main navigation" class="govuk-header__navigation">
+<ul id="navigation" class="govuk-header__navigation-list">
+<li class="govuk-header__navigation-item"><a class="govuk-header__link" href="dashboard.html">Dashboard</a></li>
+<li class="govuk-header__navigation-item govuk-header__navigation-item--active"><a class="govuk-header__link" href="team-leader.html" aria-current="page">Team view</a></li>
+<li class="govuk-header__navigation-item"><a class="govuk-header__link" href="applicant.html">Applicant portal</a></li>
+</ul>
 </nav>
+</div>
 </div>
 </header>
 
@@ -86,14 +39,14 @@ table.bar-chart tr:hover { background: transparent; }
 <h1 class="govuk-heading-l">Team leader overview</h1>
 
 <!-- URGENT ALERTS -->
-<div class="notification-banner" role="alert" aria-label="Cases requiring team leader action">
-<div class="notification-banner__header">Cases requiring your action</div>
-<div class="notification-banner__body">
+<div class="notification-banner--custom" role="alert" aria-label="Cases requiring team leader action">
+<div class="notification-banner--custom__header">Cases requiring your action</div>
+<div class="notification-banner--custom__body">
 <p><strong>3 cases need team leader input:</strong></p>
-<ul>
-<li><a href="case-view.html">CASE-2026-00214</a> — Marcus Okonkwo — escalated, evidence outstanding 64 days, contact details may be incorrect</li>
-<li><a href="case-view.html">CASE-2026-00107</a> — Meridian Care Solutions Ltd — escalated, two regulatory breaches, enforcement decision needed</li>
-<li><a href="case-view.html">CASE-2026-00133</a> — Callum Rafferty — pending decision, draft awaiting your sign-off</li>
+<ul class="govuk-list govuk-list--bullet">
+<li><a href="case-view.html" class="govuk-link">CASE-2026-00214</a> — Marcus Okonkwo — escalated, evidence outstanding 64 days, contact details may be incorrect</li>
+<li><a href="case-view.html" class="govuk-link">CASE-2026-00107</a> — Meridian Care Solutions Ltd — escalated, two regulatory breaches, enforcement decision needed</li>
+<li><a href="case-view.html" class="govuk-link">CASE-2026-00133</a> — Callum Rafferty — pending decision, draft awaiting your sign-off</li>
 </ul>
 </div>
 </div>
@@ -102,34 +55,19 @@ table.bar-chart tr:hover { background: transparent; }
 <section aria-label="Caseload summary statistics">
 <h2 class="govuk-heading-m">Caseload at a glance</h2>
 <div class="stats-row">
-<div class="stat-box">
-<div class="stat-box__number">10</div>
-<div class="stat-box__label">Total active</div>
-</div>
-<div class="stat-box stat-box--red">
-<div class="stat-box__number">2</div>
-<div class="stat-box__label">Escalated</div>
-</div>
-<div class="stat-box stat-box--orange">
-<div class="stat-box__number">2</div>
-<div class="stat-box__label">Overdue</div>
-</div>
-<div class="stat-box stat-box--purple">
-<div class="stat-box__number">2</div>
-<div class="stat-box__label">Pending decision</div>
-</div>
-<div class="stat-box stat-box--green">
-<div class="stat-box__number">1</div>
-<div class="stat-box__label">Closed this month</div>
-</div>
+<div class="stat-box"><div class="stat-box__number">10</div><div class="stat-box__label">Total active</div></div>
+<div class="stat-box stat-box--red"><div class="stat-box__number">2</div><div class="stat-box__label">Escalated</div></div>
+<div class="stat-box stat-box--orange"><div class="stat-box__number">2</div><div class="stat-box__label">Overdue</div></div>
+<div class="stat-box stat-box--purple"><div class="stat-box__number">2</div><div class="stat-box__label">Pending decision</div></div>
+<div class="stat-box stat-box--green"><div class="stat-box__number">1</div><div class="stat-box__label">Closed this month</div></div>
 </div>
 </section>
 
-<!-- STATUS BREAKDOWN CHART -->
+<!-- STATUS BREAKDOWN -->
 <section aria-label="Cases by status">
 <h2 class="govuk-heading-m">Cases by status</h2>
 <table class="bar-chart" aria-label="Cases by status breakdown">
-<thead class="visually-hidden"><tr><th scope="col">Status</th><th scope="col">Count</th></tr></thead>
+<thead class="govuk-visually-hidden"><tr><th scope="col">Status</th><th scope="col">Count</th></tr></thead>
 <tbody>
 <tr class="bar-row"><th scope="row" class="bar-label">Awaiting evidence</th><td class="bar-track"><div class="bar-fill bar-fill--orange" style="width:30%" role="presentation">3</div></td></tr>
 <tr class="bar-row"><th scope="row" class="bar-label">Under review</th><td class="bar-track"><div class="bar-fill bar-fill--blue" style="width:20%" role="presentation">2</div></td></tr>
@@ -150,7 +88,7 @@ table.bar-chart tr:hover { background: transparent; }
 <div class="capacity-card__breakdown">1 under review, 1 pending decision, 1 closed</div>
 </div>
 <div class="capacity-card capacity-card--pressure">
-<div class="capacity-card__team">Team B <span class="govuk-tag govuk-tag--red" style="font-size:12px;vertical-align:middle">Under pressure</span></div>
+<div class="capacity-card__team">Team B <strong class="govuk-tag govuk-tag--red" style="font-size:12px;vertical-align:middle">Under pressure</strong></div>
 <div class="capacity-card__count">3 cases</div>
 <div class="capacity-card__breakdown">1 awaiting evidence, 1 pending decision, 1 escalated</div>
 </div>
@@ -163,131 +101,129 @@ table.bar-chart tr:hover { background: transparent; }
 </section>
 
 <!-- DEADLINE RISK -->
-<section class="team-section" aria-label="Deadline risks">
+<section aria-label="Deadline risks">
 <h2 class="govuk-heading-m">Deadline risks</h2>
 
 <div class="deadline-card deadline-card--breach">
 <div class="deadline-card__header">
-<span class="deadline-card__case"><a href="case-view.html">CASE-2026-00214</a> — Marcus Okonkwo</span>
-<span class="govuk-tag govuk-tag--red">Breach</span>
+<span class="deadline-card__case"><a href="case-view.html" class="govuk-link">CASE-2026-00214</a> — Marcus Okonkwo</span>
+<strong class="govuk-tag govuk-tag--red">Breach</strong>
 </div>
 <p class="deadline-card__detail">Evidence outstanding 64 days. 56-day escalation threshold breached. 90-day review deadline: 8 Feb 2026 <strong>(passed)</strong>.</p>
 </div>
 
 <div class="deadline-card deadline-card--breach">
 <div class="deadline-card__header">
-<span class="deadline-card__case"><a href="case-view.html">CASE-2026-00042</a> — Jordan Smith</span>
-<span class="govuk-tag govuk-tag--red">Breach</span>
+<span class="deadline-card__case"><a href="case-view.html" class="govuk-link">CASE-2026-00042</a> — Jordan Smith</span>
+<strong class="govuk-tag govuk-tag--red">Breach</strong>
 </div>
 <p class="deadline-card__detail">Evidence outstanding 73 days. 56-day threshold breached. 90-day review deadline: 10 Apr 2026 <strong>(6 days ago)</strong>.</p>
 </div>
 
 <div class="deadline-card deadline-card--warning">
 <div class="deadline-card__header">
-<span class="deadline-card__case"><a href="case-view.html">CASE-2026-00158</a> — Priya Mehta</span>
-<span class="govuk-tag govuk-tag--orange">Approaching</span>
+<span class="deadline-card__case"><a href="case-view.html" class="govuk-link">CASE-2026-00158</a> — Priya Mehta</span>
+<strong class="govuk-tag govuk-tag--orange">Approaching</strong>
 </div>
 <p class="deadline-card__detail">Evidence requested 5 Mar 2026. 28-day reminder threshold: 2 Apr 2026 <strong>(14 days ago — reminder overdue)</strong>.</p>
 </div>
 
 <div class="deadline-card">
 <div class="deadline-card__header">
-<span class="deadline-card__case"><a href="case-view.html">CASE-2026-00199</a> — Greenfield Training Academy</span>
-<span class="govuk-tag govuk-tag--blue">On track</span>
+<span class="deadline-card__case"><a href="case-view.html" class="govuk-link">CASE-2026-00199</a> — Greenfield Training Academy</span>
+<strong class="govuk-tag govuk-tag--blue">On track</strong>
 </div>
 <p class="deadline-card__detail">Evidence requested 18 Mar 2026. 28-day response window ends 15 Apr 2026. Due tomorrow.</p>
 </div>
 </section>
 
 <!-- ALL CASES TABLE -->
-<section class="team-section" aria-label="Full case list">
-<div class="team-heading">
+<section aria-label="Full case list">
 <h2 class="govuk-heading-m">All cases</h2>
-</div>
 
 <div class="table-responsive" tabindex="0" role="region" aria-label="Scrollable case list">
-<table class="govuk-table risk-table">
-<thead>
-<tr>
-<th scope="col">Case ID</th>
-<th scope="col">Applicant</th>
-<th scope="col">Type</th>
-<th scope="col">Status</th>
-<th scope="col">Team</th>
-<th scope="col">Days since update</th>
-<th scope="col">Risk</th>
+<table class="govuk-table">
+<thead class="govuk-table__head">
+<tr class="govuk-table__row">
+<th scope="col" class="govuk-table__header">Case ID</th>
+<th scope="col" class="govuk-table__header">Applicant</th>
+<th scope="col" class="govuk-table__header">Type</th>
+<th scope="col" class="govuk-table__header">Status</th>
+<th scope="col" class="govuk-table__header">Team</th>
+<th scope="col" class="govuk-table__header">Days since update</th>
+<th scope="col" class="govuk-table__header">Risk</th>
 </tr>
 </thead>
-<tbody>
-<tr>
-<td><a href="case-view.html" class="case-link">CASE-2026-00214</a></td>
-<td>Marcus Okonkwo</td><td>Benefit review</td>
-<td><span class="govuk-tag govuk-tag--red">Escalated</span></td>
-<td>Team B</td><td>87 days</td>
-<td><span class="risk-high" aria-label="High risk">High</span></td>
+<tbody class="govuk-table__body">
+<tr class="govuk-table__row">
+<td class="govuk-table__cell"><a href="case-view.html" class="govuk-link govuk-link--no-visited-state">CASE-2026-00214</a></td>
+<td class="govuk-table__cell">Marcus Okonkwo</td><td class="govuk-table__cell">Benefit review</td>
+<td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--red">Escalated</strong></td>
+<td class="govuk-table__cell">Team B</td><td class="govuk-table__cell">87 days</td>
+<td class="govuk-table__cell"><span class="risk-high" aria-label="High risk">High</span></td>
 </tr>
-<tr>
-<td><a href="case-view.html" class="case-link">CASE-2026-00042</a></td>
-<td>Jordan Smith</td><td>Benefit review</td>
-<td><span class="govuk-tag govuk-tag--orange">Awaiting evidence</span></td>
-<td>Team B</td><td>19 days</td>
-<td><span class="risk-high" aria-label="High risk">High</span></td>
+<tr class="govuk-table__row">
+<td class="govuk-table__cell"><a href="case-view.html" class="govuk-link govuk-link--no-visited-state">CASE-2026-00042</a></td>
+<td class="govuk-table__cell">Jordan Smith</td><td class="govuk-table__cell">Benefit review</td>
+<td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--orange">Awaiting evidence</strong></td>
+<td class="govuk-table__cell">Team B</td><td class="govuk-table__cell">19 days</td>
+<td class="govuk-table__cell"><span class="risk-high" aria-label="High risk">High</span></td>
 </tr>
-<tr>
-<td><a href="case-view.html" class="case-link">CASE-2026-00107</a></td>
-<td>Meridian Care Solutions Ltd</td><td>Compliance check</td>
-<td><span class="govuk-tag govuk-tag--red">Escalated</span></td>
-<td>Team C</td><td>15 days</td>
-<td><span class="risk-high" aria-label="High risk">High</span></td>
+<tr class="govuk-table__row">
+<td class="govuk-table__cell"><a href="case-view.html" class="govuk-link govuk-link--no-visited-state">CASE-2026-00107</a></td>
+<td class="govuk-table__cell">Meridian Care Solutions Ltd</td><td class="govuk-table__cell">Compliance check</td>
+<td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--red">Escalated</strong></td>
+<td class="govuk-table__cell">Team C</td><td class="govuk-table__cell">15 days</td>
+<td class="govuk-table__cell"><span class="risk-high" aria-label="High risk">High</span></td>
 </tr>
-<tr>
-<td><a href="case-view.html" class="case-link">CASE-2026-00158</a></td>
-<td>Priya Mehta</td><td>Benefit review</td>
-<td><span class="govuk-tag govuk-tag--orange">Awaiting evidence</span></td>
-<td>Team A</td><td>42 days</td>
-<td><span class="risk-medium" aria-label="Medium risk">Medium</span></td>
+<tr class="govuk-table__row">
+<td class="govuk-table__cell"><a href="case-view.html" class="govuk-link govuk-link--no-visited-state">CASE-2026-00158</a></td>
+<td class="govuk-table__cell">Priya Mehta</td><td class="govuk-table__cell">Benefit review</td>
+<td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--orange">Awaiting evidence</strong></td>
+<td class="govuk-table__cell">Team A</td><td class="govuk-table__cell">42 days</td>
+<td class="govuk-table__cell"><span class="risk-medium" aria-label="Medium risk">Medium</span></td>
 </tr>
-<tr>
-<td><a href="case-view.html" class="case-link">CASE-2026-00199</a></td>
-<td>Greenfield Training Academy</td><td>Compliance check</td>
-<td><span class="govuk-tag govuk-tag--orange">Awaiting evidence</span></td>
-<td>Team C</td><td>29 days</td>
-<td><span class="risk-medium" aria-label="Medium risk">Medium</span></td>
+<tr class="govuk-table__row">
+<td class="govuk-table__cell"><a href="case-view.html" class="govuk-link govuk-link--no-visited-state">CASE-2026-00199</a></td>
+<td class="govuk-table__cell">Greenfield Training Academy</td><td class="govuk-table__cell">Compliance check</td>
+<td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--orange">Awaiting evidence</strong></td>
+<td class="govuk-table__cell">Team C</td><td class="govuk-table__cell">29 days</td>
+<td class="govuk-table__cell"><span class="risk-medium" aria-label="Medium risk">Medium</span></td>
 </tr>
-<tr>
-<td><a href="case-view.html" class="case-link">CASE-2026-00133</a></td>
-<td>Callum Rafferty</td><td>Benefit review</td>
-<td><span class="govuk-tag govuk-tag--purple">Pending decision</span></td>
-<td>Team B</td><td>14 days</td>
-<td><span aria-label="Low risk">Low</span></td>
+<tr class="govuk-table__row">
+<td class="govuk-table__cell"><a href="case-view.html" class="govuk-link govuk-link--no-visited-state">CASE-2026-00133</a></td>
+<td class="govuk-table__cell">Callum Rafferty</td><td class="govuk-table__cell">Benefit review</td>
+<td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--purple">Pending decision</strong></td>
+<td class="govuk-table__cell">Team B</td><td class="govuk-table__cell">14 days</td>
+<td class="govuk-table__cell"><span aria-label="Low risk">Low</span></td>
 </tr>
-<tr>
-<td><a href="case-view.html" class="case-link">CASE-2026-00231</a></td>
-<td>Riverside Events Ltd</td><td>Licence application</td>
-<td><span class="govuk-tag govuk-tag--purple">Pending decision</span></td>
-<td>Team A</td><td>15 days</td>
-<td><span aria-label="Low risk">Low</span></td>
+<tr class="govuk-table__row">
+<td class="govuk-table__cell"><a href="case-view.html" class="govuk-link govuk-link--no-visited-state">CASE-2026-00231</a></td>
+<td class="govuk-table__cell">Riverside Events Ltd</td><td class="govuk-table__cell">Licence application</td>
+<td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--purple">Pending decision</strong></td>
+<td class="govuk-table__cell">Team A</td><td class="govuk-table__cell">15 days</td>
+<td class="govuk-table__cell"><span aria-label="Low risk">Low</span></td>
 </tr>
-<tr>
-<td><a href="case-view.html" class="case-link">CASE-2026-00091</a></td>
-<td>Aisha Okafor</td><td>Licence application</td>
-<td><span class="govuk-tag govuk-tag--blue">Under review</span></td>
-<td>Team A</td><td>17 days</td>
-<td><span aria-label="Low risk">Low</span></td>
+<tr class="govuk-table__row">
+<td class="govuk-table__cell"><a href="case-view.html" class="govuk-link govuk-link--no-visited-state">CASE-2026-00091</a></td>
+<td class="govuk-table__cell">Aisha Okafor</td><td class="govuk-table__cell">Licence application</td>
+<td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--blue">Under review</strong></td>
+<td class="govuk-table__cell">Team A</td><td class="govuk-table__cell">17 days</td>
+<td class="govuk-table__cell"><span aria-label="Low risk">Low</span></td>
 </tr>
-<tr>
-<td><a href="case-view.html" class="case-link">CASE-2026-00248</a></td>
-<td>Hartwood Construction plc</td><td>Compliance check</td>
-<td><span class="govuk-tag govuk-tag--blue">Under review</span></td>
-<td>Team C</td><td>13 days</td>
-<td><span aria-label="Low risk">Low</span></td>
+<tr class="govuk-table__row">
+<td class="govuk-table__cell"><a href="case-view.html" class="govuk-link govuk-link--no-visited-state">CASE-2026-00248</a></td>
+<td class="govuk-table__cell">Hartwood Construction plc</td><td class="govuk-table__cell">Compliance check</td>
+<td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--blue">Under review</strong></td>
+<td class="govuk-table__cell">Team C</td><td class="govuk-table__cell">13 days</td>
+<td class="govuk-table__cell"><span aria-label="Low risk">Low</span></td>
 </tr>
-<tr>
-<td><a href="case-view.html" class="case-link">CASE-2026-00172</a></td>
-<td>The Old Crown Ltd</td><td>Licence application</td>
-<td><span class="govuk-tag govuk-tag--grey">Closed</span></td>
-<td>Team A</td><td>47 days</td>
-<td><span aria-label="Not applicable">—</span></td>
+<tr class="govuk-table__row">
+<td class="govuk-table__cell"><a href="case-view.html" class="govuk-link govuk-link--no-visited-state">CASE-2026-00172</a></td>
+<td class="govuk-table__cell">The Old Crown Ltd</td><td class="govuk-table__cell">Licence application</td>
+<td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--grey">Closed</strong></td>
+<td class="govuk-table__cell">Team A</td><td class="govuk-table__cell">47 days</td>
+<td class="govuk-table__cell"><span aria-label="Not applicable">—</span></td>
 </tr>
 </tbody>
 </table>
@@ -298,7 +234,16 @@ table.bar-chart tr:hover { background: transparent; }
 </div>
 
 <footer class="govuk-footer" role="contentinfo">
-<div class="govuk-footer__meta"><p>Hackathon prototype — Challenge 3: Supporting casework decisions</p></div>
+<div class="govuk-width-container">
+<div class="govuk-footer__meta">
+<div class="govuk-footer__meta-item govuk-footer__meta-item--grow">
+<span class="govuk-footer__licence-description">Hackathon prototype — Challenge 3: Supporting casework decisions</span>
+</div>
+</div>
+</div>
 </footer>
+
+<script src="../static/govuk-frontend.min.js"></script>
+<script>window.GOVUKFrontend.initAll();</script>
 </body>
 </html>

@@ -1,33 +1,45 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="govuk-template">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1d70b8">
 <title>Case View — CASE-2026-00042 — CaseTracker</title>
-<link rel="stylesheet" href="styles.css">
+<link rel="icon" sizes="48x48" href="../static/assets/images/favicon.ico">
+<link rel="stylesheet" href="../static/govuk-frontend.min.css">
+<link rel="stylesheet" href="../static/styles.css">
 </head>
-<body>
+<body class="govuk-template__body">
+<script>document.body.className += ' js-enabled' + ('noModule' in HTMLScriptElement.prototype ? ' govuk-frontend-supported' : '');</script>
 
-<!-- Skip link (2.4.1) -->
-<a href="#main-content" class="skip-link">Skip to main content</a>
+<a href="#main-content" class="govuk-skip-link" data-module="govuk-skip-link">Skip to main content</a>
 
-<header class="govuk-header" role="banner">
-<div class="govuk-header__container">
-<a href="dashboard.html" class="govuk-header__logo">CaseTracker</a>
-<nav class="govuk-header__nav" aria-label="Main navigation">
-<a href="dashboard.html">Dashboard</a>
-<a href="team-leader.html">Team view</a>
-<a href="applicant.html">Applicant portal</a>
+<header class="govuk-header" data-module="govuk-header" role="banner">
+<div class="govuk-header__container govuk-width-container">
+<div class="govuk-header__logo">
+<a href="dashboard.html" class="govuk-header__link govuk-header__link--homepage">
+<span class="govuk-header__logotype-text">CaseTracker</span>
+</a>
+</div>
+<div class="govuk-header__content">
+<nav aria-label="Main navigation" class="govuk-header__navigation">
+<ul id="navigation" class="govuk-header__navigation-list">
+<li class="govuk-header__navigation-item"><a class="govuk-header__link" href="dashboard.html">Dashboard</a></li>
+<li class="govuk-header__navigation-item"><a class="govuk-header__link" href="team-leader.html">Team view</a></li>
+<li class="govuk-header__navigation-item"><a class="govuk-header__link" href="applicant.html">Applicant portal</a></li>
+</ul>
 </nav>
+</div>
 </div>
 </header>
 
 <div class="govuk-width-container">
 <main id="main-content" class="govuk-main-wrapper" role="main">
 
-<div class="govuk-caption-l">CASE-2026-00042 &middot; Benefit review</div>
-<h1 class="govuk-heading-l">Jordan Smith <span class="govuk-tag govuk-tag--orange">Awaiting evidence</span></h1>
+<span class="govuk-caption-l">CASE-2026-00042 &middot; Benefit review</span>
+<h1 class="govuk-heading-l">Jordan Smith <strong class="govuk-tag govuk-tag--orange">Awaiting evidence</strong></h1>
 
-<!-- ALERTS (role=alert for screen readers) -->
+<!-- ALERTS -->
 <div class="warning-callout warning-callout--urgent" role="alert" aria-label="Urgent warning">
 <p class="warning-callout__title">Evidence overdue — 73 days outstanding</p>
 <p>Income statement requested on 15 Jan 2026. 56-day escalation threshold breached. Reminder should have been sent at 28 days.</p>
@@ -39,7 +51,7 @@
 <p>Applicant relocated Birmingham to Manchester (Dec 2025). New claim opened for change of circumstances. Proof of address received. <strong>Income statement still outstanding (73 days)</strong>. Applicant says employer has been contacted. Previous claim REF-55102 closed Nov 2025.</p>
 </section>
 
-<!-- WORKFLOW (semantic list with aria-current) -->
+<!-- WORKFLOW -->
 <h2 class="govuk-heading-m">Workflow</h2>
 <ol class="workflow-tracker" aria-label="Case workflow progress">
 <li class="workflow-step workflow-step--completed">Case created</li>
@@ -52,22 +64,22 @@
 <div class="govuk-grid-row">
 <div class="govuk-grid-column-two-thirds">
 
-<!-- REQUIRED ACTIONS (fieldset + legend for grouping) -->
+<!-- REQUIRED ACTIONS -->
 <fieldset class="actions-fieldset">
 <legend class="govuk-heading-m">Required actions</legend>
 <div class="actions-list">
 <label class="action-label">
 <input type="checkbox" aria-describedby="action-1-desc"> <span id="action-1-desc"><strong>Escalate to team leader</strong> — evidence outstanding &gt;56 days (POL-BR-003)</span></label>
 <label class="action-label">
-<input type="checkbox" checked aria-describedby="action-2-desc"> <span id="action-2-desc" class="action-completed"><strong>Send evidence request</strong> — completed 15 Jan 2026 <span class="visually-hidden">(completed)</span></span></label>
+<input type="checkbox" checked aria-describedby="action-2-desc"> <span id="action-2-desc" class="action-completed"><strong>Send evidence request</strong> — completed 15 Jan 2026 <span class="govuk-visually-hidden">(completed)</span></span></label>
 <label class="action-label">
 <input type="checkbox" aria-describedby="action-3-desc"> <span id="action-3-desc"><strong>Issue reminder</strong> — evidence outstanding &gt;28 days</span></label>
 <label class="action-label action-label--last">
-<input type="checkbox" checked aria-describedby="action-4-desc"> <span id="action-4-desc" class="action-completed"><strong>Log date of evidence request</strong> — 15 Jan 2026 <span class="visually-hidden">(completed)</span></span></label>
+<input type="checkbox" checked aria-describedby="action-4-desc"> <span id="action-4-desc" class="action-completed"><strong>Log date of evidence request</strong> — 15 Jan 2026 <span class="govuk-visually-hidden">(completed)</span></span></label>
 </div>
 </fieldset>
 
-<!-- TIMELINE (semantic ordered list) -->
+<!-- TIMELINE -->
 <h2 class="govuk-heading-m">Case timeline</h2>
 <ol class="timeline" aria-label="Case event timeline">
 <li class="timeline__event">
@@ -93,12 +105,12 @@
 <p>Applicant relocated from Birmingham to Manchester in December 2025. Previous claim under reference REF-55102 was closed in November 2025. New claim opened due to change of circumstances. Awaiting income statement — applicant stated employer has been contacted.</p>
 </div>
 
-<button type="button" class="govuk-button govuk-button--secondary">Add case note</button>
+<button type="button" class="govuk-button govuk-button--secondary" data-module="govuk-button">Add case note</button>
 </div>
 
 <div class="govuk-grid-column-one-third">
 
-<!-- APPLICANT (proper definition list) -->
+<!-- APPLICANT -->
 <h3 class="govuk-heading-s">Applicant details</h3>
 <dl class="govuk-summary-list">
 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key">Name</dt><dd class="govuk-summary-list__value">Jordan Smith</dd></div>
@@ -109,29 +121,29 @@
 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key">Updated</dt><dd class="govuk-summary-list__value">28 Mar 2026</dd></div>
 </dl>
 
-<!-- EVIDENCE (semantic table for data) -->
+<!-- EVIDENCE -->
 <h3 class="govuk-heading-s">Evidence tracker</h3>
 <table class="govuk-table" aria-label="Evidence status">
-<thead class="visually-hidden"><tr><th scope="col">Document</th><th scope="col">Status</th></tr></thead>
-<tbody>
-<tr><td>Proof of address</td><td><span class="govuk-tag govuk-tag--green">Received</span></td></tr>
-<tr><td>Income statement</td><td><span class="govuk-tag govuk-tag--red">Overdue</span></td></tr>
-<tr><td>Signed declaration</td><td><span class="govuk-tag govuk-tag--red">Not received</span></td></tr>
+<thead class="govuk-visually-hidden"><tr><th scope="col" class="govuk-table__header">Document</th><th scope="col" class="govuk-table__header">Status</th></tr></thead>
+<tbody class="govuk-table__body">
+<tr class="govuk-table__row"><td class="govuk-table__cell">Proof of address</td><td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">Received</strong></td></tr>
+<tr class="govuk-table__row"><td class="govuk-table__cell">Income statement</td><td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--red">Overdue</strong></td></tr>
+<tr class="govuk-table__row"><td class="govuk-table__cell">Signed declaration</td><td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--red">Not received</strong></td></tr>
 </tbody>
 </table>
 
 <!-- POLICIES -->
 <h3 class="govuk-heading-s">Applicable policies</h3>
-<details class="policy-details"><summary>POL-BR-001 — Eligibility criteria</summary><p>Reviews must be completed within 90 days of the trigger event.</p></details>
-<details class="policy-details"><summary>POL-BR-002 — Change of circumstances</summary><p>Change of address must be reported within 14 days and triggers a review.</p></details>
-<details class="policy-details" open><summary>POL-BR-003 — Evidence requirements</summary><p>Reminder at 28 days. <strong>Escalate to team leader at 56 days.</strong> Required: proof of address, income statement (3 months), signed declaration.</p></details>
-<details class="policy-details"><summary>POL-BR-004 — Decision sign-off</summary><p>Award increase &gt;£50/week needs team leader sign-off. Decisions notified within 5 working days.</p></details>
+<details class="govuk-details"><summary class="govuk-details__summary"><span class="govuk-details__summary-text">POL-BR-001 — Eligibility criteria</span></summary><div class="govuk-details__text">Reviews must be completed within 90 days of the trigger event.</div></details>
+<details class="govuk-details"><summary class="govuk-details__summary"><span class="govuk-details__summary-text">POL-BR-002 — Change of circumstances</span></summary><div class="govuk-details__text">Change of address must be reported within 14 days and triggers a review.</div></details>
+<details class="govuk-details" open><summary class="govuk-details__summary"><span class="govuk-details__summary-text">POL-BR-003 — Evidence requirements</span></summary><div class="govuk-details__text">Reminder at 28 days. <strong>Escalate to team leader at 56 days.</strong> Required: proof of address, income statement (3 months), signed declaration.</div></details>
+<details class="govuk-details"><summary class="govuk-details__summary"><span class="govuk-details__summary-text">POL-BR-004 — Decision sign-off</span></summary><div class="govuk-details__text">Award increase &gt;£50/week needs team leader sign-off. Decisions notified within 5 working days.</div></details>
 
-<!-- QUICK ACTIONS (proper buttons) -->
-<h3 class="govuk-heading-s" style="margin-top:20px">Quick actions</h3>
-<button type="button" class="govuk-button" style="width:100%;text-align:center">Escalate case</button>
-<button type="button" class="govuk-button govuk-button--secondary" style="width:100%;text-align:center">Send reminder</button>
-<button type="button" class="govuk-button govuk-button--secondary" style="width:100%;text-align:center">Record evidence</button>
+<!-- QUICK ACTIONS -->
+<h3 class="govuk-heading-s govuk-!-margin-top-5">Quick actions</h3>
+<button type="button" class="govuk-button govuk-!-width-full" data-module="govuk-button">Escalate case</button>
+<button type="button" class="govuk-button govuk-button--secondary govuk-!-width-full" data-module="govuk-button">Send reminder</button>
+<button type="button" class="govuk-button govuk-button--secondary govuk-!-width-full" data-module="govuk-button">Record evidence</button>
 
 </div>
 </div>
@@ -140,9 +152,16 @@
 </div>
 
 <footer class="govuk-footer" role="contentinfo">
+<div class="govuk-width-container">
 <div class="govuk-footer__meta">
-<p>Hackathon prototype — Challenge 3: Supporting casework decisions</p>
+<div class="govuk-footer__meta-item govuk-footer__meta-item--grow">
+<span class="govuk-footer__licence-description">Hackathon prototype — Challenge 3: Supporting casework decisions</span>
+</div>
+</div>
 </div>
 </footer>
+
+<script src="../static/govuk-frontend.min.js"></script>
+<script>window.GOVUKFrontend.initAll();</script>
 </body>
 </html>

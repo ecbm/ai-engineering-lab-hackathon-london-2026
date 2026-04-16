@@ -1,50 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="govuk-template">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1d70b8">
 <title>Caseworker Dashboard — CaseTracker</title>
-<link rel="stylesheet" href="styles.css">
-<style>
-.stats-row { display: flex; gap: 15px; margin-bottom: 30px; flex-wrap: wrap; }
-.stat-box { background: #fff; padding: 15px 20px; text-align: center; border-bottom: 4px solid #1d70b8; flex: 1; min-width: 120px; }
-.stat-box__number { font-size: 48px; font-weight: 700; line-height: 1; }
-.stat-box__label { font-size: 16px; color: #505a5f; margin-top: 5px; }
-.stat-box--red { border-bottom-color: #d4351c; }
-.stat-box--orange { border-bottom-color: #b84c00; }
-.stat-box--green { border-bottom-color: #00703c; }
-.filter-bar { background: #fff; padding: 15px 20px; margin-bottom: 20px; display: flex; gap: 15px; align-items: end; flex-wrap: wrap; }
-.filter-bar label { font-weight: 700; font-size: 16px; display: flex; flex-direction: column; gap: 5px; }
-.filter-bar select, .filter-bar input[type="text"] { font-size: 16px; padding: 8px 10px; border: 2px solid #0b0c0c; min-height: 44px; }
-.filter-bar input[type="text"] { min-width: 220px; }
-.case-row { cursor: pointer; }
-.case-row:hover { background: #e8f0fe; }
-.case-row:focus-within { outline: 3px solid #ffdd00; outline-offset: -3px; }
-.case-link { color: #1d70b8; font-weight: 700; text-decoration: underline; }
-.case-link:focus-visible { outline: 3px solid #ffdd00; box-shadow: 0 0 0 3px #ffdd00, 0 0 0 6px #0b0c0c; background: #ffdd00; color: #0b0c0c; }
-.days-badge { display: inline-block; padding: 2px 6px; font-size: 14px; font-weight: 700; border-radius: 2px; }
-.days-badge--overdue { background: #fef0ee; color: #942514; }
-.days-badge--warning { background: #fff7f0; color: #6e3619; }
-.days-badge--ok { color: #505a5f; }
-.notification-banner { border: 5px solid #d4351c; padding: 0; margin-bottom: 30px; background: #fff; }
-.notification-banner__header { background: #d4351c; color: #fff; padding: 8px 15px; font-weight: 700; font-size: 16px; }
-.notification-banner__body { padding: 15px; }
-.notification-banner__body p { margin: 0 0 5px; }
-.notification-banner__body ul { margin: 5px 0 0 20px; }
-.notification-banner__body li { margin-bottom: 3px; }
-</style>
+<link rel="icon" sizes="48x48" href="../static/assets/images/favicon.ico">
+<link rel="stylesheet" href="../static/govuk-frontend.min.css">
+<link rel="stylesheet" href="../static/styles.css">
 </head>
-<body>
+<body class="govuk-template__body">
+<script>document.body.className += ' js-enabled' + ('noModule' in HTMLScriptElement.prototype ? ' govuk-frontend-supported' : '');</script>
 
-<a href="#main-content" class="skip-link">Skip to main content</a>
+<a href="#main-content" class="govuk-skip-link" data-module="govuk-skip-link">Skip to main content</a>
 
-<header class="govuk-header" role="banner">
-<div class="govuk-header__container">
-<a href="dashboard.html" class="govuk-header__logo" aria-current="page">CaseTracker</a>
-<nav class="govuk-header__nav" aria-label="Main navigation">
-<a href="dashboard.html" aria-current="page">Dashboard</a>
-<a href="team-leader.html">Team view</a>
-<a href="applicant.html">Applicant portal</a>
+<header class="govuk-header" data-module="govuk-header" role="banner">
+<div class="govuk-header__container govuk-width-container">
+<div class="govuk-header__logo">
+<a href="dashboard.html" class="govuk-header__link govuk-header__link--homepage">
+<span class="govuk-header__logotype-text">CaseTracker</span>
+</a>
+</div>
+<div class="govuk-header__content">
+<nav aria-label="Main navigation" class="govuk-header__navigation">
+<ul id="navigation" class="govuk-header__navigation-list">
+<li class="govuk-header__navigation-item govuk-header__navigation-item--active"><a class="govuk-header__link" href="dashboard.html" aria-current="page">Dashboard</a></li>
+<li class="govuk-header__navigation-item"><a class="govuk-header__link" href="team-leader.html">Team view</a></li>
+<li class="govuk-header__navigation-item"><a class="govuk-header__link" href="applicant.html">Applicant portal</a></li>
+</ul>
 </nav>
+</div>
 </div>
 </header>
 
@@ -54,13 +39,13 @@
 <h1 class="govuk-heading-l">Your cases</h1>
 
 <!-- URGENT NOTIFICATION -->
-<div class="notification-banner" role="alert" aria-label="Urgent cases requiring attention">
-<div class="notification-banner__header">Action required</div>
-<div class="notification-banner__body">
+<div class="notification-banner--custom" role="alert" aria-label="Urgent cases requiring attention">
+<div class="notification-banner--custom__header">Action required</div>
+<div class="notification-banner--custom__body">
 <p><strong>2 cases need urgent attention:</strong></p>
-<ul>
-<li><a href="case-view.html">CASE-2026-00042</a> — evidence overdue by 73 days, escalation threshold breached</li>
-<li><a href="case-view.html">CASE-2026-00214</a> — evidence overdue by 64 days, already escalated</li>
+<ul class="govuk-list govuk-list--bullet">
+<li><a href="case-view.html" class="govuk-link">CASE-2026-00042</a> — evidence overdue by 73 days, escalation threshold breached</li>
+<li><a href="case-view.html" class="govuk-link">CASE-2026-00214</a> — evidence overdue by 64 days, already escalated</li>
 </ul>
 </div>
 </div>
@@ -89,11 +74,11 @@
 <form class="filter-bar" role="search" aria-label="Filter cases">
 <label>
 Search
-<input type="text" placeholder="Name, case ID, or reference" aria-label="Search by name, case ID, or reference" id="search-input">
+<input class="govuk-input" type="text" placeholder="Name, case ID, or reference" aria-label="Search by name, case ID, or reference" id="search-input">
 </label>
 <label>
 Status
-<select id="filter-status" aria-label="Filter by status">
+<select class="govuk-select" id="filter-status" aria-label="Filter by status">
 <option value="">All statuses</option>
 <option value="awaiting_evidence">Awaiting evidence</option>
 <option value="under_review">Under review</option>
@@ -104,30 +89,29 @@ Status
 </label>
 <label>
 Case type
-<select id="filter-type" aria-label="Filter by case type">
+<select class="govuk-select" id="filter-type" aria-label="Filter by case type">
 <option value="">All types</option>
 <option value="benefit_review">Benefit review</option>
 <option value="licence_application">Licence application</option>
 <option value="compliance_check">Compliance check</option>
 </select>
 </label>
-<button type="button" class="govuk-button" style="margin:0;align-self:end" onclick="filterCases()">Apply filters</button>
+<button type="button" class="govuk-button" style="margin:0;align-self:end" data-module="govuk-button" onclick="filterCases()">Apply filters</button>
 </form>
 
 <!-- CASE TABLE -->
 <table class="govuk-table" aria-label="Case list">
-<thead>
-<tr>
-<th scope="col">Case ID</th>
-<th scope="col">Applicant</th>
-<th scope="col">Type</th>
-<th scope="col">Status</th>
-<th scope="col">Last updated</th>
-<th scope="col">Days since update</th>
+<thead class="govuk-table__head">
+<tr class="govuk-table__row">
+<th scope="col" class="govuk-table__header">Case ID</th>
+<th scope="col" class="govuk-table__header">Applicant</th>
+<th scope="col" class="govuk-table__header">Type</th>
+<th scope="col" class="govuk-table__header">Status</th>
+<th scope="col" class="govuk-table__header">Last updated</th>
+<th scope="col" class="govuk-table__header">Days since update</th>
 </tr>
 </thead>
-<tbody id="case-tbody">
-<!-- Populated by JS -->
+<tbody class="govuk-table__body" id="case-tbody">
 </tbody>
 </table>
 
@@ -135,9 +119,17 @@ Case type
 </div>
 
 <footer class="govuk-footer" role="contentinfo">
-<div class="govuk-footer__meta"><p>Hackathon prototype — Challenge 3: Supporting casework decisions</p></div>
+<div class="govuk-width-container">
+<div class="govuk-footer__meta">
+<div class="govuk-footer__meta-item govuk-footer__meta-item--grow">
+<span class="govuk-footer__licence-description">Hackathon prototype — Challenge 3: Supporting casework decisions</span>
+</div>
+</div>
+</div>
 </footer>
 
+<script src="../static/govuk-frontend.min.js"></script>
+<script>window.GOVUKFrontend.initAll();</script>
 <script>
 var cases = [
   { case_id:"CASE-2026-00042", case_type:"benefit_review", status:"awaiting_evidence", name:"Jordan Smith", reference:"REF-77291", last_updated:"2026-03-28", created:"2026-01-10" },
@@ -151,9 +143,7 @@ var cases = [
   { case_id:"CASE-2026-00231", case_type:"licence_application", status:"pending_decision", name:"Riverside Events Ltd", reference:"REF-79003", last_updated:"2026-04-01", created:"2026-02-20" },
   { case_id:"CASE-2026-00248", case_type:"compliance_check", status:"under_review", name:"Hartwood Construction plc", reference:"REF-62190", last_updated:"2026-04-03", created:"2026-03-01" }
 ];
-
 var TODAY = new Date("2026-04-16");
-
 var STATUS_MAP = {
   awaiting_evidence: { label:"Awaiting evidence", cls:"govuk-tag--orange" },
   under_review: { label:"Under review", cls:"govuk-tag--blue" },
@@ -162,22 +152,22 @@ var STATUS_MAP = {
   closed: { label:"Closed", cls:"govuk-tag--grey" },
   case_created: { label:"Created", cls:"" }
 };
-
 var TYPE_MAP = {
   benefit_review: "Benefit review",
   licence_application: "Licence application",
   compliance_check: "Compliance check"
 };
-
 function daysSince(dateStr) {
-  var d = new Date(dateStr);
-  return Math.floor((TODAY - d) / (1000*60*60*24));
+  return Math.floor((TODAY - new Date(dateStr)) / (1000*60*60*24));
 }
-
+function formatDate(dateStr) {
+  var d = new Date(dateStr);
+  var months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  return d.getDate() + " " + months[d.getMonth()] + " " + d.getFullYear();
+}
 function renderCases(filtered) {
   var tbody = document.getElementById("case-tbody");
   tbody.innerHTML = "";
-  // Sort: escalated first, then by days since update descending
   filtered.sort(function(a,b) {
     if (a.status === "escalated" && b.status !== "escalated") return -1;
     if (b.status === "escalated" && a.status !== "escalated") return 1;
@@ -189,29 +179,23 @@ function renderCases(filtered) {
     var daysCls = days > 56 ? "days-badge--overdue" : days > 28 ? "days-badge--warning" : "days-badge--ok";
     var daysLabel = days > 56 ? days + " days (overdue)" : days > 28 ? days + " days (warning)" : days + " days";
     var tr = document.createElement("tr");
-    tr.className = "case-row";
+    tr.className = "govuk-table__row";
     tr.innerHTML =
-      '<td><a href="case-view.html" class="case-link">' + c.case_id + '</a></td>' +
-      '<td>' + c.name + '</td>' +
-      '<td>' + TYPE_MAP[c.case_type] + '</td>' +
-      '<td><span class="govuk-tag ' + s.cls + '">' + s.label + '</span></td>' +
-      '<td>' + formatDate(c.last_updated) + '</td>' +
-      '<td><span class="days-badge ' + daysCls + '">' + daysLabel + '</span></td>';
+      '<td class="govuk-table__cell"><a href="case-view.html" class="govuk-link govuk-link--no-visited-state">' + c.case_id + '</a></td>' +
+      '<td class="govuk-table__cell">' + c.name + '</td>' +
+      '<td class="govuk-table__cell">' + TYPE_MAP[c.case_type] + '</td>' +
+      '<td class="govuk-table__cell"><strong class="govuk-tag ' + s.cls + '">' + s.label + '</strong></td>' +
+      '<td class="govuk-table__cell">' + formatDate(c.last_updated) + '</td>' +
+      '<td class="govuk-table__cell"><span class="days-badge ' + daysCls + '">' + daysLabel + '</span></td>';
     tbody.appendChild(tr);
   });
   if (filtered.length === 0) {
     var tr = document.createElement("tr");
-    tr.innerHTML = '<td colspan="6">No cases match your filters.</td>';
+    tr.className = "govuk-table__row";
+    tr.innerHTML = '<td class="govuk-table__cell" colspan="6">No cases match your filters.</td>';
     tbody.appendChild(tr);
   }
 }
-
-function formatDate(dateStr) {
-  var d = new Date(dateStr);
-  var months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-  return d.getDate() + " " + months[d.getMonth()] + " " + d.getFullYear();
-}
-
 function filterCases() {
   var search = document.getElementById("search-input").value.toLowerCase();
   var status = document.getElementById("filter-status").value;
@@ -223,23 +207,18 @@ function filterCases() {
     return true;
   });
   renderCases(filtered);
-  // Announce result count for screen readers
   var liveRegion = document.getElementById("live-results");
   if (!liveRegion) {
     liveRegion = document.createElement("div");
     liveRegion.id = "live-results";
     liveRegion.setAttribute("aria-live", "polite");
     liveRegion.setAttribute("role", "status");
-    liveRegion.className = "visually-hidden";
+    liveRegion.className = "govuk-visually-hidden";
     document.body.appendChild(liveRegion);
   }
   liveRegion.textContent = filtered.length + " case" + (filtered.length !== 1 ? "s" : "") + " found.";
 }
-
-// Initial render
 renderCases(cases);
-
-// Allow Enter on search
 document.getElementById("search-input").addEventListener("keydown", function(e) {
   if (e.key === "Enter") { e.preventDefault(); filterCases(); }
 });
