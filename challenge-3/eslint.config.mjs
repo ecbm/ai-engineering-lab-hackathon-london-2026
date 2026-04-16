@@ -26,6 +26,6 @@ export default [
     }
   },
   {
-    ignores: ["node_modules/", "static/", "wireframes/", "public/"]
+    ignores: ["node_modules/", "static/", "wireframes/", "public/", "data/", "docs/", "views/"]
   }
 ];

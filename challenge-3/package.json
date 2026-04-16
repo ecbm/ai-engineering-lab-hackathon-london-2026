@@ -2,11 +2,11 @@
   "name": "casetracker",
   "version": "1.0.0",
   "description": "GOV.UK caseworker decision support tool",
-  "main": "app.js",
+  "main": "src/server.js",
   "scripts": {
-    "start": "node app.js",
-    "dev": "nodemon app.js",
-    "lint": "eslint app.js lib/ routes/"
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "lint": "eslint src/"
   },
   "dependencies": {
     "express": "^4.18.2",
