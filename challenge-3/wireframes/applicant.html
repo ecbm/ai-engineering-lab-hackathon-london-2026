@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en" class="govuk-template">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1d70b8">
+<title>Check your case status — CaseTracker</title>
+<link rel="icon" sizes="48x48" href="../static/assets/images/favicon.ico">
+<link rel="stylesheet" href="../static/govuk-frontend.min.css">
+<link rel="stylesheet" href="../static/styles.css">
+</head>
+<body class="govuk-template__body">
+<script>document.body.className += ' js-enabled' + ('noModule' in HTMLScriptElement.prototype ? ' govuk-frontend-supported' : '');</script>
+
+<a href="#main-content" class="govuk-skip-link" data-module="govuk-skip-link">Skip to main content</a>
+
+<header class="govuk-header" data-module="govuk-header" role="banner">
+<div class="govuk-header__container govuk-width-container">
+<div class="govuk-header__logo">
+<span class="govuk-header__logotype-text">CaseTracker</span>
+</div>
+<div class="govuk-header__content">
+<nav aria-label="Main navigation" class="govuk-header__navigation">
+<ul id="navigation" class="govuk-header__navigation-list">
+<li class="govuk-header__navigation-item"><a class="govuk-header__link" href="dashboard.html">Dashboard</a></li>
+<li class="govuk-header__navigation-item"><a class="govuk-header__link" href="team-leader.html">Team view</a></li>
+<li class="govuk-header__navigation-item govuk-header__navigation-item--active"><a class="govuk-header__link" href="applicant.html" aria-current="page">Applicant portal</a></li>
+</ul>
+</nav>
+</div>
+</div>
+</header>
+
+<div class="govuk-width-container">
+<main id="main-content" class="govuk-main-wrapper" role="main">
+
+<!-- LOOKUP FORM -->
+<div id="lookup-section">
+<h1 class="govuk-heading-l">Check the status of your case</h1>
+<p class="govuk-body">Use your case reference number and date of birth to see the current status of your case.</p>
+
+<div class="lookup-panel">
+<div class="govuk-form-group" id="ref-group">
+<label class="govuk-label govuk-label--m" for="ref-input">Case reference number</label>
+<div class="govuk-hint" id="ref-hint">This is on the letter or email we sent you, for example REF-77291</div>
+<p class="error-message" id="ref-error" role="alert"><span class="govuk-visually-hidden">Error:</span> Enter your case reference number</p>
+<input class="govuk-input" id="ref-input" type="text" autocomplete="off" aria-describedby="ref-hint" spellcheck="false">
+</div>
+
+<div class="govuk-form-group govuk-!-margin-top-4" id="dob-group">
+<label class="govuk-label govuk-label--m" for="dob-input">Date of birth</label>
+<div class="govuk-hint" id="dob-hint">For example, 14 03 1985</div>
+<p class="error-message" id="dob-error" role="alert"><span class="govuk-visually-hidden">Error:</span> Enter your date of birth</p>
+<input class="govuk-input govuk-input--width-10" id="dob-input" type="text" autocomplete="bday" aria-describedby="dob-hint" placeholder="DD MM YYYY" spellcheck="false">
+</div>
+
+<button type="button" class="govuk-button govuk-!-margin-top-3" id="lookup-btn" data-module="govuk-button">Check status</button>
+</div>
+</div>
+
+<!-- STATUS RESULT -->
+<div id="status-section" class="status-page" aria-live="polite">
+
+<a href="#" id="back-link" class="govuk-back-link" onclick="showLookup(); return false;">Back to search</a>
+
+<div class="status-banner status-banner--in-progress" role="region" aria-label="Current case status">
+<div class="status-banner__heading">Your case is in progress</div>
+<div class="status-banner__body">We are waiting for documents from you.</div>
+</div>
+
+<h1 class="govuk-heading-l">Case status</h1>
+<p class="govuk-body-s">Reference: REF-77291 &middot; Case: CASE-2026-00042 &middot; Last updated: 28 March 2026</p>
+
+<div class="govuk-grid-row">
+<div class="govuk-grid-column-two-thirds">
+
+<!-- WHAT HAPPENS NEXT -->
+<section class="what-happens-next" aria-label="What you need to do">
+<h2 class="govuk-heading-m govuk-!-margin-bottom-2">What you need to do</h2>
+<p><strong>We need your income statement</strong> covering the 3 months before your change of circumstances. We asked for this on 15 January 2026.</p>
+<p>If you have already sent this, you do not need to do anything. Allow 5 working days for us to process documents received by post.</p>
+<p>If you have not sent it yet, please send it as soon as possible to avoid delays to your case.</p>
+</section>
+
+<!-- PROGRESS STEPS -->
+<h2 class="govuk-heading-m">Case progress</h2>
+<ol class="step-list" aria-label="Case progress steps">
+<li class="step-item step-item--completed">
+<div class="step-item__label">Application received</div>
+<div class="step-item__date"><time datetime="2026-01-10">10 January 2026</time></div>
+</li>
+<li class="step-item step-item--completed">
+<div class="step-item__label">Documents requested</div>
+<div class="step-item__detail">We asked you to send proof of address and an income statement.</div>
+<div class="step-item__date"><time datetime="2026-01-15">15 January 2026</time></div>
+</li>
+<li class="step-item step-item--completed">
+<div class="step-item__label">Some documents received</div>
+<div class="step-item__detail">We received your proof of address. We are still waiting for your income statement.</div>
+<div class="step-item__date"><time datetime="2026-02-02">2 February 2026</time></div>
+</li>
+<li class="step-item step-item--current" aria-current="step">
+<div class="step-item__label">Waiting for remaining documents</div>
+<div class="step-item__detail">We need your income statement before we can continue with your case.</div>
+</li>
+<li class="step-item step-item--future">
+<div class="step-item__label">Case review</div>
+<div class="step-item__detail">Once we have all documents, we will review your case.</div>
+</li>
+<li class="step-item step-item--future">
+<div class="step-item__label">Decision</div>
+<div class="step-item__detail">We will write to you with our decision.</div>
+</li>
+</ol>
+
+<!-- EVIDENCE STATUS -->
+<h2 class="govuk-heading-m">Your documents</h2>
+<table class="govuk-table" aria-label="Document status">
+<thead class="govuk-visually-hidden"><tr><th scope="col" class="govuk-table__header">Document</th><th scope="col" class="govuk-table__header">Status</th></tr></thead>
+<tbody class="govuk-table__body">
+<tr class="govuk-table__row"><td class="govuk-table__cell">Proof of address</td><td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">Received</strong></td></tr>
+<tr class="govuk-table__row"><td class="govuk-table__cell">Income statement (3 months)</td><td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--red">Not yet received</strong></td></tr>
+<tr class="govuk-table__row"><td class="govuk-table__cell">Signed declaration</td><td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--red">Not yet received</strong></td></tr>
+</tbody>
+</table>
+
+</div>
+
+<div class="govuk-grid-column-one-third">
+
+<!-- CASE DETAILS -->
+<h2 class="govuk-heading-s">Your details</h2>
+<dl class="govuk-summary-list">
+<div class="govuk-summary-list__row"><dt class="govuk-summary-list__key">Name</dt><dd class="govuk-summary-list__value">Jordan Smith</dd></div>
+<div class="govuk-summary-list__row"><dt class="govuk-summary-list__key">Reference</dt><dd class="govuk-summary-list__value">REF-77291</dd></div>
+<div class="govuk-summary-list__row"><dt class="govuk-summary-list__key">Case type</dt><dd class="govuk-summary-list__value">Benefit review</dd></div>
+<div class="govuk-summary-list__row"><dt class="govuk-summary-list__key">Date opened</dt><dd class="govuk-summary-list__value">10 January 2026</dd></div>
+</dl>
+
+<!-- CONTACT -->
+<div class="contact-box">
+<h2 class="govuk-heading-s govuk-!-margin-bottom-2">Need help?</h2>
+<p>If any of your details are wrong or you need to tell us about a change, contact us.</p>
+<p><strong>Phone:</strong> 0800 123 4567</p>
+<p><strong>Email:</strong> casework@example.gov.uk</p>
+<p class="govuk-body-s">Lines are open Monday to Friday, 9am to 5pm.</p>
+</div>
+
+<!-- TIMELINE -->
+<h2 class="govuk-heading-s">Updates</h2>
+<ol class="timeline" aria-label="Case updates">
+<li class="timeline__event">
+<time class="timeline__date" datetime="2026-02-02">2 Feb 2026</time>
+<p class="timeline__title">Documents partly received</p>
+<p class="timeline__description">Proof of address received.</p>
+</li>
+<li class="timeline__event">
+<time class="timeline__date" datetime="2026-01-15">15 Jan 2026</time>
+<p class="timeline__title">Documents requested</p>
+<p class="timeline__description">We wrote to you asking for documents.</p>
+</li>
+<li class="timeline__event timeline__event--success">
+<time class="timeline__date" datetime="2026-01-10">10 Jan 2026</time>
+<p class="timeline__title">Case opened</p>
+<p class="timeline__description">Your application was received.</p>
+</li>
+</ol>
+
+</div>
+</div>
+
+</div>
+
+</main>
+</div>
+
+<footer class="govuk-footer" role="contentinfo">
+<div class="govuk-width-container">
+<div class="govuk-footer__meta">
+<div class="govuk-footer__meta-item govuk-footer__meta-item--grow">
+<span class="govuk-footer__licence-description">Hackathon prototype — Challenge 3: Supporting casework decisions</span>
+</div>
+</div>
+</div>
+</footer>
+
+<script src="../static/govuk-frontend.min.js"></script>
+<script>window.GOVUKFrontend.initAll();</script>
+<script>
+function showLookup() {
+  document.getElementById('lookup-section').style.display = '';
+  document.getElementById('status-section').classList.remove('status-page--visible');
+  document.getElementById('status-section').classList.add('status-page');
+  document.getElementById('ref-input').focus();
+}
+document.getElementById('lookup-btn').addEventListener('click', function() {
+  var ref = document.getElementById('ref-input').value.trim();
+  var dob = document.getElementById('dob-input').value.trim();
+  var hasError = false;
+  document.getElementById('ref-error').classList.remove('error-message--visible');
+  document.getElementById('dob-error').classList.remove('error-message--visible');
+  document.getElementById('ref-input').classList.remove('error-input');
+  document.getElementById('dob-input').classList.remove('error-input');
+  document.getElementById('ref-input').removeAttribute('aria-invalid');
+  document.getElementById('dob-input').removeAttribute('aria-invalid');
+  document.getElementById('ref-input').setAttribute('aria-describedby', 'ref-hint');
+  document.getElementById('dob-input').setAttribute('aria-describedby', 'dob-hint');
+  if (!ref) {
+    document.getElementById('ref-error').classList.add('error-message--visible');
+    document.getElementById('ref-input').classList.add('error-input');
+    document.getElementById('ref-input').setAttribute('aria-invalid', 'true');
+    document.getElementById('ref-input').setAttribute('aria-describedby', 'ref-hint ref-error');
+    hasError = true;
+  }
+  if (!dob) {
+    document.getElementById('dob-error').classList.add('error-message--visible');
+    document.getElementById('dob-input').classList.add('error-input');
+    document.getElementById('dob-input').setAttribute('aria-invalid', 'true');
+    document.getElementById('dob-input').setAttribute('aria-describedby', 'dob-hint dob-error');
+    hasError = true;
+  }
+  if (hasError) {
+    var firstError = document.querySelector('.error-input');
+    if (firstError) firstError.focus();
+    return;
+  }
+  document.getElementById('lookup-section').style.display = 'none';
+  document.getElementById('status-section').classList.remove('status-page');
+  document.getElementById('status-section').classList.add('status-page--visible');
+  document.getElementById('status-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+});
+document.getElementById('ref-input').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') { e.preventDefault(); document.getElementById('lookup-btn').click(); }
+});
+document.getElementById('dob-input').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') { e.preventDefault(); document.getElementById('lookup-btn').click(); }
+});
+</script>
+</body>
+</html>
