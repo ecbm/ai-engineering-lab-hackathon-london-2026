@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Case View — CASE-2026-00042</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="govuk-header"><div class="govuk-header__container">
+<a href="dashboard.html" class="govuk-header__logo">CaseTracker</a>
+<nav class="govuk-header__nav">
+<a href="dashboard.html">Dashboard</a>
+<a href="team-leader.html">Team view</a>
+</nav>
+</div></header>
+
+<div class="govuk-width-container"><main class="govuk-main-wrapper">
+
+<div class="govuk-caption-l">CASE-2026-00042 &middot; Benefit review</div>
+<h1 class="govuk-heading-l">Jordan Smith <span class="govuk-tag govuk-tag--orange">Awaiting evidence</span></h1>
+
+<!-- ALERTS -->
+<div class="warning-callout warning-callout--urgent">
+<div class="warning-callout__title">Evidence overdue — 73 days outstanding</div>
+Income statement requested on 15 Jan 2026. 56-day escalation threshold breached. Reminder should have been sent at 28 days.
+</div>
+
+<!-- AI SUMMARY -->
+<div class="ai-summary">
+<div class="ai-summary__label">AI-generated summary</div>
+Applicant relocated Birmingham → Manchester (Dec 2025). New claim opened for change of circumstances. Proof of address received. <strong>Income statement still outstanding (73 days)</strong>. Applicant says employer has been contacted. Previous claim REF-55102 closed Nov 2025.
+</div>
+
+<!-- WORKFLOW -->
+<h2 class="govuk-heading-m">Workflow</h2>
+<div class="workflow-tracker">
+<div class="workflow-step workflow-step--completed">Case created</div>
+<div class="workflow-step workflow-step--current">Awaiting evidence</div>
+<div class="workflow-step workflow-step--future">Under review</div>
+<div class="workflow-step workflow-step--future">Pending decision</div>
+<div class="workflow-step workflow-step--future">Closed</div>
+</div>
+
+<div class="govuk-grid-row">
+<div class="govuk-grid-column-two-thirds">
+
+<!-- REQUIRED ACTIONS -->
+<h2 class="govuk-heading-m">Required actions</h2>
+<div style="background:#fff;padding:15px 20px;margin-bottom:20px;">
+<label style="display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid #b1b4b6;cursor:pointer">
+<input type="checkbox"> <span><strong>Escalate to team leader</strong> — evidence outstanding &gt;56 days (POL-BR-003)</span></label>
+<label style="display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid #b1b4b6;cursor:pointer">
+<input type="checkbox" checked> <span style="text-decoration:line-through;color:#505a5f"><strong>Send evidence request</strong> — completed 15 Jan 2026</span></label>
+<label style="display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid #b1b4b6;cursor:pointer">
+<input type="checkbox"> <span><strong>Issue reminder</strong> — evidence outstanding &gt;28 days</span></label>
+<label style="display:flex;gap:10px;align-items:flex-start;padding:8px 0;cursor:pointer">
+<input type="checkbox" checked> <span style="text-decoration:line-through;color:#505a5f"><strong>Log date of evidence request</strong> — 15 Jan 2026</span></label>
+</div>
+
+<!-- TIMELINE -->
+<h2 class="govuk-heading-m">Case timeline</h2>
+<div class="timeline">
+<div class="timeline__event"><div class="timeline__date">2 Feb 2026</div><div class="timeline__title">Evidence received</div><div class="timeline__description">Proof of address received. Income statement still outstanding.</div></div>
+<div class="timeline__event"><div class="timeline__date">15 Jan 2026</div><div class="timeline__title">Evidence requested</div><div class="timeline__description">Requested proof of address and income statement.</div></div>
+<div class="timeline__event timeline__event--success"><div class="timeline__date">10 Jan 2026</div><div class="timeline__title">Case created</div><div class="timeline__description">Initial application received via online portal.</div></div>
+</div>
+
+<!-- CASE NOTES -->
+<h2 class="govuk-heading-m">Case notes</h2>
+<div class="govuk-inset-text">Applicant relocated from Birmingham to Manchester in December 2025. Previous claim under reference REF-55102 was closed in November 2025. New claim opened due to change of circumstances. Awaiting income statement — applicant stated employer has been contacted.</div>
+
+<a href="#" class="govuk-button govuk-button--secondary">Add case note</a>
+</div>
+
+<div class="govuk-grid-column-one-third">
+
+<!-- APPLICANT -->
+<h3 class="govuk-heading-s">Applicant details</h3>
+<div class="govuk-summary-list">
+<div class="govuk-summary-list__row"><div class="govuk-summary-list__key">Name</div><div class="govuk-summary-list__value">Jordan Smith</div></div>
+<div class="govuk-summary-list__row"><div class="govuk-summary-list__key">Reference</div><div class="govuk-summary-list__value">REF-77291</div></div>
+<div class="govuk-summary-list__row"><div class="govuk-summary-list__key">DOB</div><div class="govuk-summary-list__value">14 Mar 1985</div></div>
+<div class="govuk-summary-list__row"><div class="govuk-summary-list__key">Team</div><div class="govuk-summary-list__value">Team B</div></div>
+<div class="govuk-summary-list__row"><div class="govuk-summary-list__key">Created</div><div class="govuk-summary-list__value">10 Jan 2026</div></div>
+<div class="govuk-summary-list__row"><div class="govuk-summary-list__key">Updated</div><div class="govuk-summary-list__value">28 Mar 2026</div></div>
+</div>
+
+<!-- EVIDENCE -->
+<h3 class="govuk-heading-s">Evidence tracker</h3>
+<div style="background:#fff;padding:15px;margin-bottom:20px">
+<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #b1b4b6"><span>Proof of address</span><span class="govuk-tag govuk-tag--green">Received</span></div>
+<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #b1b4b6"><span>Income statement</span><span class="govuk-tag govuk-tag--red">Overdue</span></div>
+<div style="display:flex;justify-content:space-between;padding:6px 0"><span>Signed declaration</span><span class="govuk-tag govuk-tag--red">Not received</span></div>
+</div>
+
+<!-- POLICIES -->
+<h3 class="govuk-heading-s">Applicable policies</h3>
+<details style="margin-bottom:10px"><summary style="cursor:pointer;font-weight:700;font-size:14px">POL-BR-001 — Eligibility criteria</summary><p style="font-size:14px;margin-top:5px;color:#505a5f">Reviews must be completed within 90 days of the trigger event.</p></details>
+<details style="margin-bottom:10px"><summary style="cursor:pointer;font-weight:700;font-size:14px">POL-BR-002 — Change of circumstances</summary><p style="font-size:14px;margin-top:5px;color:#505a5f">Change of address must be reported within 14 days and triggers a review.</p></details>
+<details style="margin-bottom:10px" open><summary style="cursor:pointer;font-weight:700;font-size:14px">POL-BR-003 — Evidence requirements</summary><p style="font-size:14px;margin-top:5px;color:#505a5f">Reminder at 28 days. <strong>Escalate to team leader at 56 days.</strong> Required: proof of address, income statement (3 months), signed declaration.</p></details>
+<details style="margin-bottom:10px"><summary style="cursor:pointer;font-weight:700;font-size:14px">POL-BR-004 — Decision sign-off</summary><p style="font-size:14px;margin-top:5px;color:#505a5f">Award increase &gt;£50/week needs team leader sign-off. Decisions notified within 5 working days.</p></details>
+
+<!-- QUICK ACTIONS -->
+<h3 class="govuk-heading-s" style="margin-top:20px">Quick actions</h3>
+<a href="#" class="govuk-button" style="width:100%;text-align:center">Escalate case</a>
+<a href="#" class="govuk-button govuk-button--secondary" style="width:100%;text-align:center">Send reminder</a>
+<a href="#" class="govuk-button govuk-button--secondary" style="width:100%;text-align:center">Record evidence</a>
+
+</div>
+</div>
+
+</main></div>
+
+<footer class="govuk-footer"><div class="govuk-footer__meta">Hackathon prototype — Challenge 3: Supporting casework decisions</div></footer>
+</body>
+</html>

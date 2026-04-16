@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Cases — CaseView</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="govuk-header">
+    <div class="govuk-header__container">
+      <a href="dashboard.html" class="govuk-header__logo">&#x1F3DB; CaseView</a>
+      <nav class="govuk-header__nav">
+        <a href="dashboard.html" style="color:#fff;font-weight:700">My cases</a>
+        <a href="team-leader.html">Team overview</a>
+        <a href="applicant.html">Applicant portal</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="govuk-phase-banner">
+    <div class="govuk-phase-banner__container">
+      <span class="govuk-phase-banner__tag">PROTOTYPE</span>
+      This is a prototype. Data shown is synthetic.
+    </div>
+  </div>
+
+  <div class="govuk-width-container">
+    <main class="govuk-main-wrapper">
+
+      <h1 class="govuk-heading-xl">My cases</h1>
+
+      <!-- Alert banners -->
+      <div id="alerts"></div>
+
+      <!-- Filters -->
+      <div class="filter-bar">
+        <div>
+          <label for="filterType" style="font-size:14px;font-weight:700;display:block">Case type</label>
+          <select id="filterType" onchange="renderCases()">
+            <option value="">All types</option>
+            <option value="benefit_review">Benefit review</option>
+            <option value="licence_application">Licence application</option>
+            <option value="compliance_check">Compliance check</option>
+          </select>
+        </div>
+        <div>
+          <label for="filterStatus" style="font-size:14px;font-weight:700;display:block">Status</label>
+          <select id="filterStatus" onchange="renderCases()">
+            <option value="">All statuses</option>
+            <option value="awaiting_evidence">Awaiting evidence</option>
+            <option value="under_review">Under review</option>
+            <option value="pending_decision">Pending decision</option>
+            <option value="escalated">Escalated</option>
+            <option value="closed">Closed</option>
+          </select>
+        </div>
+        <div>
+          <label for="searchBox" style="font-size:14px;font-weight:700;display:block">Search</label>
+          <input id="searchBox" type="text" placeholder="Name or case ID..." oninput="renderCases()" style="width:200px">
+        </div>
+      </div>
+
+      <!-- Cases table -->
+      <table class="govuk-table">
+        <thead>
+          <tr>
+            <th>Case ID</th>
+            <th>Applicant</th>
+            <th>Type</th>
+            <th>Status</th>
+            <th>Last updated</th>
+            <th>Flags</th>
+          </tr>
+        </thead>
+        <tbody id="casesBody"></tbody>
+      </table>
+
+    </main>
+  </div>
+
+  <footer class="govuk-footer">
+    <div class="govuk-footer__meta">
+      Prototype built for AI Engineering Lab Hackathon 2026 &middot; Challenge 3: Supporting Casework Decisions
+    </div>
+  </footer>
+
+<script>
+const cases = [
+  {"case_id":"CASE-2026-00042","case_type":"benefit_review","status":"awaiting_evidence","applicant":{"name":"Jordan Smith","reference":"REF-77291","date_of_birth":"1985-03-14"},"assigned_to":"team_b","created_date":"2026-01-10","last_updated":"2026-03-28","timeline":[{"date":"2026-01-10","event":"case_created","note":"Initial application received via online portal."},{"date":"2026-01-15","event":"evidence_requested","note":"Requested proof of address and income statement."},{"date":"2026-02-02","event":"evidence_received","note":"Proof of address received. Income statement still outstanding."}],"case_notes":"Applicant relocated from Birmingham to Manchester in December 2025. Previous claim under reference REF-55102 was closed in November 2025. New claim opened due to change of circumstances. Awaiting income statement — applicant stated employer has been contacted."},
+  {"case_id":"CASE-2026-00091","case_type":"licence_application","status":"under_review","applicant":{"name":"Aisha Okafor","reference":"REF-88102","date_of_birth":"1979-07-22"},"assigned_to":"team_a","created_date":"2026-02-14","last_updated":"2026-03-30","timeline":[{"date":"2026-02-14","event":"case_created","note":"Application received by post."},{"date":"2026-02-18","event":"evidence_verified","note":"Identity documents verified."},{"date":"2026-03-05","event":"inspection_completed","note":"Inspection passed."},{"date":"2026-03-06","event":"under_review","note":"Case passed to senior caseworker for decision."}],"case_notes":"Application for event licence — annual community festival, capacity 500."},
+  {"case_id":"CASE-2026-00107","case_type":"compliance_check","status":"escalated","applicant":{"name":"Meridian Care Solutions Ltd","reference":"REF-90034","date_of_birth":null},"assigned_to":"team_c","created_date":"2026-01-28","last_updated":"2026-04-01","timeline":[{"date":"2026-01-28","event":"case_created"},{"date":"2026-02-04","event":"evidence_requested"},{"date":"2026-02-20","event":"evidence_received"},{"date":"2026-03-10","event":"site_visit"},{"date":"2026-03-11","event":"escalated","note":"Escalated due to severity of breaches."}],"case_notes":"Two regulatory breaches identified. Legal team copied in."},
+  {"case_id":"CASE-2026-00133","case_type":"benefit_review","status":"pending_decision","applicant":{"name":"Callum Rafferty","reference":"REF-66210","date_of_birth":"1991-11-03"},"assigned_to":"team_b","created_date":"2026-02-01","last_updated":"2026-04-02","timeline":[{"date":"2026-02-01","event":"case_created"},{"date":"2026-02-05","event":"evidence_requested"},{"date":"2026-02-19","event":"evidence_received"},{"date":"2026-03-01","event":"under_review"},{"date":"2026-04-02","event":"pending_decision","note":"Draft decision prepared. Awaiting sign-off."}],"case_notes":"Straightforward case. Draft decision recommends award adjustment."},
+  {"case_id":"CASE-2026-00158","case_type":"benefit_review","status":"awaiting_evidence","applicant":{"name":"Priya Mehta","reference":"REF-71049","date_of_birth":"1967-04-29"},"assigned_to":"team_a","created_date":"2026-02-28","last_updated":"2026-03-05","timeline":[{"date":"2026-02-28","event":"case_created"},{"date":"2026-03-05","event":"evidence_requested","note":"Requested medical certificate and current income statement."}],"case_notes":"Annual reassessment. No response received to date."},
+  {"case_id":"CASE-2026-00172","case_type":"licence_application","status":"closed","applicant":{"name":"The Old Crown Ltd","reference":"REF-81773","date_of_birth":null},"assigned_to":"team_a","created_date":"2026-01-05","last_updated":"2026-02-28","timeline":[{"date":"2026-01-05","event":"case_created"},{"date":"2026-01-09","event":"evidence_verified"},{"date":"2026-01-20","event":"under_review"},{"date":"2026-01-22","event":"pending_decision"},{"date":"2026-02-28","event":"closed","note":"Licence renewed."}],"case_notes":"Renewal approved without conditions."},
+  {"case_id":"CASE-2026-00199","case_type":"compliance_check","status":"awaiting_evidence","applicant":{"name":"Greenfield Training Academy","reference":"REF-94421","date_of_birth":null},"assigned_to":"team_c","created_date":"2026-03-15","last_updated":"2026-03-18","timeline":[{"date":"2026-03-15","event":"case_created"},{"date":"2026-03-18","event":"evidence_requested"}],"case_notes":"Routine scheduled check. 28-day response window in progress."},
+  {"case_id":"CASE-2026-00214","case_type":"benefit_review","status":"escalated","applicant":{"name":"Marcus Okonkwo","reference":"REF-55887","date_of_birth":"1978-09-16"},"assigned_to":"team_b","created_date":"2025-11-10","last_updated":"2026-01-20","timeline":[{"date":"2025-11-10","event":"case_created"},{"date":"2025-11-17","event":"evidence_requested"},{"date":"2026-01-20","event":"escalated","note":"Evidence outstanding for 64 days."}],"case_notes":"Evidence outstanding 64 days. Exceeds 56-day threshold. Two reminders sent. No response."},
+  {"case_id":"CASE-2026-00231","case_type":"licence_application","status":"pending_decision","applicant":{"name":"Riverside Events Ltd","reference":"REF-79003","date_of_birth":null},"assigned_to":"team_a","created_date":"2026-02-20","last_updated":"2026-04-01","timeline":[{"date":"2026-02-20","event":"case_created"},{"date":"2026-02-25","event":"evidence_requested"},{"date":"2026-03-10","event":"evidence_received"},{"date":"2026-03-14","event":"consultation_opened"},{"date":"2026-04-01","event":"pending_decision","note":"Two objections received."}],"case_notes":"Two objections from local residents. Updated noise plan submitted."},
+  {"case_id":"CASE-2026-00248","case_type":"compliance_check","status":"under_review","applicant":{"name":"Hartwood Construction plc","reference":"REF-62190","date_of_birth":null},"assigned_to":"team_c","created_date":"2026-03-01","last_updated":"2026-04-03","timeline":[{"date":"2026-03-01","event":"case_created"},{"date":"2026-03-05","event":"evidence_requested"},{"date":"2026-03-19","event":"evidence_received"},{"date":"2026-03-25","event":"under_review","note":"Documents under review."}],"case_notes":"Triggered by whistleblower report. One gap noted in incident logs."}
+];
+
+const today = new Date('2026-04-16');
+
+function formatType(t) {
+  return t.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+}
+
+function statusTag(s) {
+  const colors = {escalated:'red',awaiting_evidence:'orange',under_review:'blue',pending_decision:'yellow',closed:'grey',case_created:'blue'};
+  return `<span class="govuk-tag govuk-tag--${colors[s]||'blue'}">${s.replace(/_/g,' ')}</span>`;
+}
+
+function daysSince(dateStr) {
+  return Math.floor((today - new Date(dateStr)) / 86400000);
+}
+
+function getFlags(c) {
+  const flags = [];
+  if (c.status === 'escalated') flags.push('<span class="govuk-tag govuk-tag--red">ESCALATED</span>');
+
+  // Check for overdue evidence
+  if (c.status === 'awaiting_evidence') {
+    const evidenceReq = c.timeline.filter(t => t.event === 'evidence_requested').pop();
+    if (evidenceReq) {
+      const days = daysSince(evidenceReq.date);
+      if (days > 56) flags.push('<span class="govuk-tag govuk-tag--red">OVERDUE 56d+</span>');
+      else if (days > 28) flags.push('<span class="govuk-tag govuk-tag--orange">REMINDER DUE</span>');
+    }
+  }
+
+  // Check for stale cases
+  const stale = daysSince(c.last_updated);
+  if (stale > 14 && c.status !== 'closed') flags.push('<span class="govuk-tag govuk-tag--grey">STALE</span>');
+
+  return flags.join(' ');
+}
+
+function renderAlerts() {
+  const urgent = cases.filter(c => {
+    if (c.status === 'escalated') return true;
+    if (c.status === 'awaiting_evidence') {
+      const evidenceReq = c.timeline.filter(t => t.event === 'evidence_requested').pop();
+      if (evidenceReq && daysSince(evidenceReq.date) > 56) return true;
+    }
+    return false;
+  });
+  if (urgent.length === 0) return;
+  document.getElementById('alerts').innerHTML = `
+    <div class="govuk-notification-banner" style="border-color:#d4351c">
+      <div class="govuk-notification-banner__header" style="background:#d4351c">Action required</div>
+      <p style="margin:0;font-size:16px"><strong>${urgent.length} case${urgent.length>1?'s':''}</strong> need${urgent.length===1?'s':''} urgent attention — escalated or evidence overdue beyond policy threshold.</p>
+    </div>`;
+}
+
+function renderCases() {
+  const typeFilter = document.getElementById('filterType').value;
+  const statusFilter = document.getElementById('filterStatus').value;
+  const search = document.getElementById('searchBox').value.toLowerCase();
+
+  let filtered = cases.filter(c => {
+    if (typeFilter && c.case_type !== typeFilter) return false;
+    if (statusFilter && c.status !== statusFilter) return false;
+    if (search && !c.case_id.toLowerCase().includes(search) && !c.applicant.name.toLowerCase().includes(search)) return false;
+    return true;
+  });
+
+  // Sort: escalated first, then by last_updated desc
+  filtered.sort((a,b) => {
+    if (a.status === 'escalated' && b.status !== 'escalated') return -1;
+    if (b.status === 'escalated' && a.status !== 'escalated') return 1;
+    return new Date(b.last_updated) - new Date(a.last_updated);
+  });
+
+  document.getElementById('casesBody').innerHTML = filtered.map(c => `
+    <tr class="clickable" onclick="window.location='case-view.html?id=${c.case_id}'">
+      <td><a href="case-view.html?id=${c.case_id}">${c.case_id}</a></td>
+      <td>${c.applicant.name}</td>
+      <td>${formatType(c.case_type)}</td>
+      <td>${statusTag(c.status)}</td>
+      <td>${c.last_updated}</td>
+      <td>${getFlags(c)}</td>
+    </tr>
+  `).join('');
+}
+
+renderAlerts();
+renderCases();
+</script>
+</body>
+</html>
