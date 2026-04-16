@@ -1,0 +1,18 @@
+{
+  "name": "casetracker",
+  "version": "1.0.0",
+  "description": "GOV.UK caseworker decision support tool",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "govuk-frontend": "^5.4.0",
+    "nunjucks": "^3.2.4"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.3"
+  }
+}

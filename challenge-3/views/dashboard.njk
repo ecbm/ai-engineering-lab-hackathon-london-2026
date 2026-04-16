@@ -1,0 +1,139 @@
+{% extends "layout.njk" %}
+
+{% block content %}
+
+  <h1 class="govuk-heading-xl">Your cases</h1>
+
+  {# Urgent action banner #}
+  {% if urgentCases.length > 0 %}
+    <div class="app-urgent-banner" role="region" aria-label="Urgent cases requiring action">
+      <div class="app-urgent-banner__header">
+        <span class="govuk-body-s govuk-!-font-weight-bold">Action required</span>
+      </div>
+      <div class="app-urgent-banner__body">
+        <p class="govuk-body-s govuk-!-margin-bottom-1">The following cases require immediate attention:</p>
+        <ul class="govuk-list govuk-list--bullet govuk-body-s govuk-!-margin-bottom-0">
+          {% for c in urgentCases %}
+            <li>
+              <a href="/case/{{ c.case_id }}" class="govuk-link">{{ c.case_id }}</a>
+              —
+              {% if c.status == 'escalated' and c.escalationStatus %}
+                evidence overdue by {{ c.escalationStatus.days }} days, already escalated
+              {% elif c.escalationStatus %}
+                evidence overdue by {{ c.escalationStatus.days }} days, escalation threshold breached
+              {% else %}
+                case escalated
+              {% endif %}
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  {% endif %}
+
+  {# Stats row #}
+  <div class="app-stats-row" role="region" aria-label="Case summary statistics">
+    <div class="app-stat app-stat--blue">
+      <span class="app-stat__number">{{ stats.total }}</span>
+      <span class="app-stat__label">Total cases</span>
+    </div>
+    <div class="app-stat app-stat--red">
+      <span class="app-stat__number">{{ stats.escalated }}</span>
+      <span class="app-stat__label">Escalated</span>
+    </div>
+    <div class="app-stat app-stat--orange">
+      <span class="app-stat__number">{{ stats.awaiting_evidence }}</span>
+      <span class="app-stat__label">Awaiting evidence</span>
+    </div>
+    <div class="app-stat app-stat--green">
+      <span class="app-stat__number">{{ stats.closed }}</span>
+      <span class="app-stat__label">Closed</span>
+    </div>
+  </div>
+
+  {# Filter form #}
+  <div class="app-filter-bar">
+    <form method="get" action="/" role="search" aria-label="Filter cases" class="app-filter-form">
+      <div class="govuk-form-group app-filter-form__field">
+        <label class="govuk-label" for="search">Search</label>
+        <input class="govuk-input" id="search" name="search" type="text"
+          value="{{ filters.search }}" placeholder="Name, case ID or reference"
+          aria-label="Search by name, case ID or reference">
+      </div>
+
+      <div class="govuk-form-group app-filter-form__field">
+        <label class="govuk-label" for="status">Status</label>
+        <select class="govuk-select" id="status" name="status" aria-label="Filter by status">
+          <option value="">All statuses</option>
+          <option value="awaiting_evidence" {% if filters.status == 'awaiting_evidence' %}selected{% endif %}>Awaiting evidence</option>
+          <option value="under_review" {% if filters.status == 'under_review' %}selected{% endif %}>Under review</option>
+          <option value="pending_decision" {% if filters.status == 'pending_decision' %}selected{% endif %}>Pending decision</option>
+          <option value="escalated" {% if filters.status == 'escalated' %}selected{% endif %}>Escalated</option>
+          <option value="closed" {% if filters.status == 'closed' %}selected{% endif %}>Closed</option>
+        </select>
+      </div>
+
+      <div class="govuk-form-group app-filter-form__field">
+        <label class="govuk-label" for="case_type">Case type</label>
+        <select class="govuk-select" id="case_type" name="case_type" aria-label="Filter by case type">
+          <option value="">All types</option>
+          <option value="benefit_review" {% if filters.case_type == 'benefit_review' %}selected{% endif %}>Benefit review</option>
+          <option value="licence_application" {% if filters.case_type == 'licence_application' %}selected{% endif %}>Licence application</option>
+          <option value="compliance_check" {% if filters.case_type == 'compliance_check' %}selected{% endif %}>Compliance check</option>
+        </select>
+      </div>
+
+      <div class="app-filter-form__actions">
+        <button type="submit" class="govuk-button govuk-button--secondary govuk-!-margin-bottom-0">
+          Apply filters
+        </button>
+        {% if filters.search or filters.status or filters.case_type %}
+          <a href="/" class="govuk-link govuk-body-s">Clear filters</a>
+        {% endif %}
+      </div>
+    </form>
+  </div>
+
+  {# Live region for filter result count #}
+  <p class="govuk-body-s govuk-!-margin-bottom-2" aria-live="polite" aria-atomic="true">
+    Showing {{ resultCount }} {% if resultCount == 1 %}case{% else %}cases{% endif %}
+    {% if filters.search or filters.status or filters.case_type %} (filtered){% endif %}
+  </p>
+
+  {# Case table #}
+  {% if cases.length > 0 %}
+    <table class="govuk-table" aria-label="Case list">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">Case ID</th>
+          <th scope="col" class="govuk-table__header">Applicant</th>
+          <th scope="col" class="govuk-table__header">Type</th>
+          <th scope="col" class="govuk-table__header">Status</th>
+          <th scope="col" class="govuk-table__header">Last updated</th>
+          <th scope="col" class="govuk-table__header">Days since update</th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        {% for c in cases %}
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">
+              <a href="/case/{{ c.case_id }}" class="govuk-link">{{ c.case_id }}</a>
+            </td>
+            <td class="govuk-table__cell">{{ c.applicant.name }}</td>
+            <td class="govuk-table__cell">{{ c.case_type | caseTypeLabel }}</td>
+            <td class="govuk-table__cell">
+              <strong class="govuk-tag {{ c.status | statusTagClass }}">{{ c.status | statusLabel }}</strong>
+            </td>
+            <td class="govuk-table__cell">{{ c.last_updated | formatDate }}</td>
+            <td class="govuk-table__cell">
+              <span class="app-days-badge {{ c.daysBadge.cssClass }}">{{ c.daysBadge.label }}</span>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p class="govuk-body">No cases match your filters.</p>
+  {% endif %}
+
+{% endblock %}
