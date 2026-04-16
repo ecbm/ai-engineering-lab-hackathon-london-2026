@@ -1,0 +1,81 @@
+name: CI
+
+on:
+  push:
+    branches: [main, challenge-3-mob]
+  pull_request:
+    branches: [main, challenge-3-mob]
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run lint
+
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    needs: lint
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
+      - run: npm test
+
+  a11y:
+    name: Accessibility (WCAG 2.2 AA)
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
+      - name: Start server
+        run: npm start &
+        env:
+          PORT: 3000
+          NODE_ENV: test
+      - name: Wait for server
+        run: npx wait-on http://localhost:3000 --timeout 15000
+      - name: Check dashboard
+        run: npx pa11y http://localhost:3000 --standard WCAG2AA --reporter cli
+      - name: Check case view
+        run: npx pa11y http://localhost:3000/case/CASE-2026-00042 --standard WCAG2AA --reporter cli
+      - name: Check team leader view
+        run: npx pa11y http://localhost:3000/team-leader --standard WCAG2AA --reporter cli
+      - name: Check applicant portal
+        run: npx pa11y http://localhost:3000/applicant --standard WCAG2AA --reporter cli
+
+  # TODO: Add deploy job once a hosting target is chosen.
+  # Uncomment and configure when ready — Railway example below.
+  # Requires RAILWAY_TOKEN added as a GitHub Actions secret.
+  #
+  # deploy:
+  #   name: Deploy
+  #   runs-on: ubuntu-latest
+  #   needs: [test, a11y]
+  #   if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: actions/setup-node@v4
+  #       with:
+  #         node-version: '20'
+  #         cache: 'npm'
+  #     - run: npm ci --omit=dev
+  #     - name: Deploy to Railway
+  #       run: npx @railway/cli@latest up --service casetracker
+  #       env:
+  #         RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
