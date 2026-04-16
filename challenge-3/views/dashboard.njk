@@ -7,7 +7,7 @@
   {# Urgent notification banner #}
   {% if urgentCases.length > 0 %}
     <div class="app-notification-banner" role="alert" aria-label="Urgent cases requiring attention">
-      <div class="app-notification-banner__header">Action required</div>
+      <h2 class="app-notification-banner__header">Action required</h2>
       <div class="app-notification-banner__body">
         <p><strong>{{ urgentCases.length }} {% if urgentCases.length == 1 %}case needs{% else %}cases need{% endif %} urgent attention:</strong></p>
         <ul class="govuk-list govuk-list--bullet">
@@ -29,24 +29,24 @@
   {% endif %}
 
   {# Stats row #}
-  <div class="app-stats-row" role="region" aria-label="Case summary statistics">
+  <dl class="app-stats-row" role="region" aria-label="Case summary statistics">
     <div class="app-stat-box">
-      <div class="app-stat-box__number">{{ stats.total }}</div>
-      <div class="app-stat-box__label">Total cases</div>
+      <dd class="app-stat-box__number">{{ stats.total }}</dd>
+      <dt class="app-stat-box__label">Total cases</dt>
     </div>
     <div class="app-stat-box app-stat-box--red">
-      <div class="app-stat-box__number">{{ stats.escalated }}</div>
-      <div class="app-stat-box__label">Escalated</div>
+      <dd class="app-stat-box__number">{{ stats.escalated }}</dd>
+      <dt class="app-stat-box__label">Escalated</dt>
     </div>
     <div class="app-stat-box app-stat-box--orange">
-      <div class="app-stat-box__number">{{ stats.awaiting_evidence }}</div>
-      <div class="app-stat-box__label">Awaiting evidence</div>
+      <dd class="app-stat-box__number">{{ stats.awaiting_evidence }}</dd>
+      <dt class="app-stat-box__label">Awaiting evidence</dt>
     </div>
     <div class="app-stat-box app-stat-box--green">
-      <div class="app-stat-box__number">{{ stats.closed }}</div>
-      <div class="app-stat-box__label">Closed</div>
+      <dd class="app-stat-box__number">{{ stats.closed }}</dd>
+      <dt class="app-stat-box__label">Closed</dt>
     </div>
-  </div>
+  </dl>
 
   {# Filters #}
   <form class="app-filter-bar" method="get" action="/" role="search" aria-label="Filter cases">

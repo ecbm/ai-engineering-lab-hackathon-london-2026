@@ -4,6 +4,18 @@
 
   {% if not lookedUp %}
     {# LOOKUP FORM #}
+    {% if errors %}
+      <div class="govuk-error-summary" data-module="govuk-error-summary" role="alert" aria-labelledby="error-summary-title" tabindex="-1">
+        <h2 class="govuk-error-summary__title" id="error-summary-title">There is a problem</h2>
+        <div class="govuk-error-summary__body">
+          <ul class="govuk-list govuk-error-summary__list">
+            {% if errors.reference %}<li><a href="#reference">{{ errors.reference }}</a></li>{% endif %}
+            {% if errors.dob %}<li><a href="#dob">{{ errors.dob }}</a></li>{% endif %}
+          </ul>
+        </div>
+      </div>
+    {% endif %}
+
     <h1 class="govuk-heading-l">Check the status of your case</h1>
     <p class="govuk-body">Use your case reference number and date of birth to see the current status of your case.</p>
 
@@ -77,7 +89,11 @@
         <ol class="app-step-list" aria-label="Case progress steps">
           {% for step in workflowSteps %}
             <li class="app-step-item app-step-item--{{ step.stepStatus }}" {% if step.stepStatus == 'current' %}aria-current="step"{% endif %}>
-              <div class="app-step-item__label">{{ step.label }}</div>
+              <div class="app-step-item__label">
+                {{ step.label }}
+                {% if step.stepStatus == 'completed' %}<span class="govuk-visually-hidden">(completed)</span>{% endif %}
+                {% if step.stepStatus == 'future' %}<span class="govuk-visually-hidden">(not yet started)</span>{% endif %}
+              </div>
             </li>
           {% endfor %}
         </ol>

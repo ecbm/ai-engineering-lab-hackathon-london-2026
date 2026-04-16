@@ -21,7 +21,6 @@ router.get('/', (req, res) => {
     { label: 'Escalated', count: allAugmented.filter(c => c.status === 'escalated').length, cls: 'red' },
     { label: 'Closed', count: allAugmented.filter(c => c.status === 'closed').length, cls: 'grey' }
   ];
-  const maxCount = Math.max(...statusBreakdown.map(s => s.count), 1);
   statusBreakdown.forEach(s => { s.pct = Math.round((s.count / stats.total) * 100); });
 
   // Team capacity
@@ -59,7 +58,7 @@ router.get('/', (req, res) => {
       }
       return { case: c, riskLevel, tagClass, tagLabel };
     })
-    .sort((a, b) => (a.riskLevel === 'breach' ? -1 : 1));
+    .sort((a, _b) => (a.riskLevel === 'breach' ? -1 : 1));
 
   // Cases needing team leader action
   const actionRequired = allAugmented.filter(c =>

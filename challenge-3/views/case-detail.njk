@@ -37,7 +37,7 @@
   {# AI summary #}
   {% if aiSummary %}
     <section class="app-ai-summary" aria-label="AI-generated case summary">
-      <p class="app-ai-summary__label" aria-hidden="true">AI-generated summary</p>
+      <p class="app-ai-summary__label">AI-generated summary</p>
       <p class="govuk-body govuk-!-margin-bottom-0">{{ aiSummary }}</p>
     </section>
   {% endif %}
@@ -50,6 +50,7 @@
         {% if step.stepStatus == 'current' %}aria-current="step"{% endif %}
         {% if step.stepStatus == 'future' %}aria-disabled="true"{% endif %}>
         {{ step.label }}
+        {% if step.stepStatus == 'completed' %}<span class="govuk-visually-hidden">(completed)</span>{% endif %}
       </li>
     {% endfor %}
   </ol>

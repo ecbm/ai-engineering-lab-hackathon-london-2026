@@ -22,7 +22,7 @@ router.post('/', (req, res) => {
 
   if (Object.keys(errors).length > 0) {
     return res.render('applicant.njk', {
-      title: 'Check your case status — CaseTracker',
+      title: 'Error: Check your case status — CaseTracker',
       activePage: 'applicant',
       lookedUp: false,
       errors,

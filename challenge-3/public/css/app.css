@@ -31,7 +31,8 @@ label {
   color: #ffffff;
   padding: 8px 15px;
   font-weight: 700;
-  font-size: 16px;
+  font-size: 19px;
+  margin: 0;
 }
 
 .app-notification-banner__body {
@@ -74,7 +75,7 @@ label {
 }
 
 .app-stat-box--red    { border-bottom-color: #ca3535; }
-.app-stat-box--orange { border-bottom-color: #f47738; }
+.app-stat-box--orange { border-bottom-color: #b7592a; } /* darkened from #f47738 for 3:1 on white */
 .app-stat-box--green  { border-bottom-color: #0f7a52; }
 .app-stat-box--purple { border-bottom-color: #54319f; }
 
@@ -234,7 +235,7 @@ label {
 
 .app-workflow-tracker__step--future {
   background: #f3f3f3;
-  color: #858686;
+  color: #6f6f6f; /* darkened from #858686 for 4.5:1 on #f3f3f3 */
 }
 
 /* Actions checklist
@@ -267,6 +268,12 @@ label {
 
 .app-action-label--last {
   border-bottom: none;
+}
+
+.app-action-label:focus-within {
+  outline: 3px solid #ffdd00;
+  outline-offset: 0;
+  box-shadow: inset 0 0 0 2px #0b0c0c;
 }
 
 .app-action-label input[type="checkbox"] {
@@ -362,18 +369,16 @@ label {
   }
 }
 
-/* Bar chart (team leader)
+/* Bar chart (team leader) — uses divs not table rows to avoid display:flex on <tr>
    ========================================================================== */
 
-.app-bar-chart { width: 100%; border-collapse: collapse; margin-bottom: 30px; border: none; }
-.app-bar-chart th, .app-bar-chart td { border: none; padding: 4px 0; }
-.app-bar-chart tr:hover { background: transparent; }
+.app-bar-chart { margin-bottom: 30px; }
 .app-bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
 .app-bar-label { flex: 0 0 160px; font-size: 16px; font-weight: 700; text-align: right; }
 .app-bar-track { flex: 1; background: #f3f3f3; height: 28px; }
 .app-bar-fill { height: 100%; display: flex; align-items: center; padding-left: 8px; font-size: 14px; font-weight: 700; color: #ffffff; min-width: 28px; }
 .app-bar-fill--red { background: #ca3535; }
-.app-bar-fill--orange { background: #f47738; }
+.app-bar-fill--orange { background: #b7592a; color: #ffffff; } /* darkened from #f47738 for 4.5:1 */
 .app-bar-fill--blue { background: #1d70b8; }
 .app-bar-fill--purple { background: #54319f; }
 .app-bar-fill--grey { background: #484949; }
@@ -429,8 +434,8 @@ label {
 .app-step-item--completed .app-step-item__label { color: #484949; }
 .app-step-item--current { background: #f4f8fb; }
 .app-step-item--current::before { background: #1d70b8; color: #ffffff; }
-.app-step-item--future::before { background: #f3f3f3; color: #858686; border: 2px solid #cecece; line-height: 30px; }
-.app-step-item--future .app-step-item__label { color: #858686; }
+.app-step-item--future::before { background: #f3f3f3; color: #6f6f6f; border: 2px solid #8a8a8a; line-height: 30px; } /* darkened border and text for contrast */
+.app-step-item--future .app-step-item__label { color: #6f6f6f; } /* darkened from #858686 */
 .app-step-item__label { font-weight: 700; font-size: 19px; }
 
 .app-what-happens-next { background: #f4f8fb; border-left: 5px solid #1d70b8; padding: 20px; margin-bottom: 30px; }

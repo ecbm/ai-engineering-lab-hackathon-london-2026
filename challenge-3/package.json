@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "dev": "nodemon app.js"
+    "dev": "nodemon app.js",
+    "lint": "eslint app.js lib/ routes/"
   },
   "dependencies": {
     "express": "^4.18.2",
@@ -13,6 +14,8 @@
     "nunjucks": "^3.2.4"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.2.0",
     "nodemon": "^3.0.3"
   }
 }
