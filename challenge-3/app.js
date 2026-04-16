@@ -101,6 +101,8 @@ app.locals.aiSummaries = aiSummaries;
 // Routes
 app.use('/api', require('./routes/api'));
 app.use('/case', require('./routes/cases'));
+app.use('/team', require('./routes/team'));
+app.use('/applicant', require('./routes/applicant'));
 app.use('/', require('./routes/dashboard'));
 
 // 404 handler

@@ -1,103 +1,93 @@
 {% extends "layout.njk" %}
 
+{% block beforeContent %}
+  <a href="{{ backLink }}" class="govuk-back-link">Back to cases</a>
+{% endblock %}
+
 {% block content %}
 
-  <a href="{{ backLink }}" class="govuk-back-link">Back to cases</a>
-
   <span class="govuk-caption-l">{{ case.case_id }} &middot; {{ caseTypeLabel }}</span>
-  <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">
+  <h1 class="govuk-heading-l">
     {{ case.applicant.name }}
-    <strong class="govuk-tag {{ case.status | statusTagClass }} govuk-!-margin-left-2">{{ case.status | statusLabel }}</strong>
+    <strong class="govuk-tag {{ case.status | statusTagClass }}">{{ case.status | statusLabel }}</strong>
   </h1>
 
-  {# Workflow tracker #}
-  <nav aria-label="Workflow progress" class="app-workflow-tracker govuk-!-margin-bottom-6">
-    <ol class="app-workflow-tracker__steps" role="list">
-      {% for step in workflowSteps %}
-        <li class="app-workflow-tracker__step app-workflow-tracker__step--{{ step.stepStatus }}"
-          {% if step.stepStatus == 'current' %}aria-current="step"{% endif %}
-          {% if step.stepStatus == 'future' %}aria-disabled="true"{% endif %}>
-          {{ step.label }}
-        </li>
-      {% endfor %}
-    </ol>
-  </nav>
+  {# Escalation alert #}
+  {% if case.escalationStatus and case.escalationStatus.status != 'ok' %}
+    <div class="app-warning-callout app-warning-callout--urgent" role="alert" aria-label="Urgent warning">
+      <p class="app-warning-callout__title">
+        {% if case.escalationStatus.status == 'overdue' %}
+          Evidence overdue — {{ case.escalationStatus.days }} days outstanding
+        {% else %}
+          Evidence reminder due — {{ case.escalationStatus.days }} days outstanding
+        {% endif %}
+      </p>
+      <p>
+        Evidence requested on {{ case.escalationStatus.evidenceRequestedDate | formatDate }}.
+        {% if case.escalationStatus.status == 'overdue' %}
+          {{ case.escalationStatus.escalationDays }}-day escalation threshold breached.
+          Reminder should have been sent at {{ case.escalationStatus.reminderDays }} days.
+        {% else %}
+          {{ case.escalationStatus.reminderDays }}-day reminder threshold reached.
+        {% endif %}
+      </p>
+    </div>
+  {% endif %}
 
-  {# Two-column layout #}
+  {# AI summary #}
+  {% if aiSummary %}
+    <section class="app-ai-summary" aria-label="AI-generated case summary">
+      <p class="app-ai-summary__label" aria-hidden="true">AI-generated summary</p>
+      <p class="govuk-body govuk-!-margin-bottom-0">{{ aiSummary }}</p>
+    </section>
+  {% endif %}
+
+  {# Workflow tracker #}
+  <h2 class="govuk-heading-m">Workflow</h2>
+  <ol class="app-workflow-tracker" aria-label="Case workflow progress">
+    {% for step in workflowSteps %}
+      <li class="app-workflow-tracker__step app-workflow-tracker__step--{{ step.stepStatus }}"
+        {% if step.stepStatus == 'current' %}aria-current="step"{% endif %}
+        {% if step.stepStatus == 'future' %}aria-disabled="true"{% endif %}>
+        {{ step.label }}
+      </li>
+    {% endfor %}
+  </ol>
+
   <div class="govuk-grid-row">
 
-    {# Main column — 2/3 width #}
+    {# Main column #}
     <div class="govuk-grid-column-two-thirds">
 
-      {# Escalation alert banner #}
-      {% if case.escalationStatus and case.escalationStatus.status != 'ok' %}
-        <div class="app-alert-banner app-alert-banner--{{ case.escalationStatus.status }}" role="alert">
-          <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-bottom-1">
-            {% if case.escalationStatus.status == 'overdue' %}
-              Evidence overdue — {{ case.escalationStatus.days }} days outstanding
-            {% else %}
-              Evidence reminder due — {{ case.escalationStatus.days }} days outstanding
-            {% endif %}
-          </p>
-          <p class="govuk-body-s govuk-!-margin-bottom-0">
-            Evidence requested on {{ case.escalationStatus.evidenceRequestedDate | formatDate }}.
-            {% if case.escalationStatus.status == 'overdue' %}
-              {{ case.escalationStatus.escalationDays }}-day escalation threshold breached.
-              Reminder should have been sent at {{ case.escalationStatus.reminderDays }} days.
-            {% else %}
-              {{ case.escalationStatus.reminderDays }}-day reminder threshold reached.
-            {% endif %}
-          </p>
-        </div>
-      {% endif %}
-
-      {# AI-generated summary #}
-      {% if aiSummary %}
-        <div class="app-ai-summary" aria-labelledby="ai-summary-label">
-          <span class="app-ai-summary__label" id="ai-summary-label" aria-hidden="true">AI-generated summary</span>
-          <span class="govuk-visually-hidden">AI-generated summary: </span>
-          <p class="govuk-body govuk-!-margin-bottom-0">{{ aiSummary }}</p>
-        </div>
-      {% endif %}
-
       {# Required actions #}
-      <fieldset class="govuk-fieldset app-actions-fieldset">
-        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-          <h2 class="govuk-fieldset__heading">Required actions</h2>
-        </legend>
-        <div class="govuk-checkboxes govuk-checkboxes--small">
+      <fieldset class="app-actions-fieldset">
+        <legend class="govuk-heading-m">Required actions</legend>
+        <div class="app-actions-list">
           {% for item in requiredActions %}
-            <div class="govuk-checkboxes__item">
-              <input class="govuk-checkboxes__input" id="action-{{ loop.index }}" name="actions"
-                type="checkbox" value="{{ loop.index }}"
-                {% if item.completed %}checked{% endif %}
-                aria-label="{{ item.action }}">
-              <label class="govuk-label govuk-checkboxes__label {% if item.completed %}app-action--completed{% endif %}"
-                for="action-{{ loop.index }}">
-                {{ item.action }}
-              </label>
-            </div>
+            <label class="app-action-label {% if loop.last %}app-action-label--last{% endif %}">
+              <input type="checkbox" {% if item.completed %}checked{% endif %}
+                aria-describedby="action-{{ loop.index }}-desc">
+              <span id="action-{{ loop.index }}-desc" {% if item.completed %}class="app-action-completed"{% endif %}>
+                <strong>{{ item.action }}</strong>
+                {% if item.completed %}<span class="govuk-visually-hidden">(completed)</span>{% endif %}
+              </span>
+            </label>
           {% endfor %}
         </div>
       </fieldset>
 
-      {# Case timeline #}
+      {# Timeline #}
       <h2 class="govuk-heading-m govuk-!-margin-top-6">Case timeline</h2>
-      <ol class="app-timeline" aria-label="Case timeline events">
+      <ol class="app-timeline" aria-label="Case event timeline">
         {% for event in timeline %}
-          <li class="app-timeline__event">
-            <div class="app-timeline__bullet {% if event.event == 'case_created' %}app-timeline__bullet--green{% else %}app-timeline__bullet--blue{% endif %}"></div>
-            <div class="app-timeline__content">
-              <time class="app-timeline__date govuk-body-s" datetime="{{ event.date }}">
-                {{ event.date | formatDate }}
-              </time>
-              <p class="govuk-body govuk-!-font-weight-bold govuk-!-margin-bottom-1">
-                {{ event.event | eventLabel }}
-              </p>
-              {% if event.note %}
-                <p class="govuk-body-s govuk-!-margin-bottom-0 app-timeline__note">{{ event.note }}</p>
-              {% endif %}
-            </div>
+          <li class="app-timeline__event {% if event.event == 'case_created' %}app-timeline__event--success{% endif %}">
+            <time class="app-timeline__date" datetime="{{ event.date }}">
+              {{ event.date | formatDate }}
+            </time>
+            <p class="app-timeline__title">{{ event.event | eventLabel }}</p>
+            {% if event.note %}
+              <p class="app-timeline__description">{{ event.note }}</p>
+            {% endif %}
           </li>
         {% endfor %}
       </ol>
@@ -105,18 +95,18 @@
       {# Case notes #}
       <h2 class="govuk-heading-m govuk-!-margin-top-6">Case notes</h2>
       <div class="govuk-inset-text">
-        <p class="govuk-body govuk-!-margin-bottom-2">{{ case.case_notes }}</p>
+        <p>{{ case.case_notes }}</p>
       </div>
-      <button type="button" class="govuk-button govuk-button--secondary">Add case note</button>
+      <button type="button" class="govuk-button govuk-button--secondary" data-module="govuk-button">Add case note</button>
 
-    </div>{# end main column #}
+    </div>
 
-    {# Sidebar — 1/3 width #}
+    {# Sidebar #}
     <div class="govuk-grid-column-one-third">
 
       {# Applicant details #}
       <h2 class="govuk-heading-s">Applicant details</h2>
-      <dl class="govuk-summary-list govuk-summary-list--no-border govuk-!-margin-bottom-6">
+      <dl class="govuk-summary-list govuk-!-margin-bottom-6">
         <div class="govuk-summary-list__row">
           <dt class="govuk-summary-list__key">Name</dt>
           <dd class="govuk-summary-list__value">{{ case.applicant.name }}</dd>
@@ -136,7 +126,7 @@
           <dd class="govuk-summary-list__value">{{ case.assigned_to | teamLabel }}</dd>
         </div>
         <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">Opened</dt>
+          <dt class="govuk-summary-list__key">Created</dt>
           <dd class="govuk-summary-list__value">{{ case.created_date | formatDate }}</dd>
         </div>
         <div class="govuk-summary-list__row">
@@ -149,12 +139,17 @@
       {% if evidenceItems.length > 0 %}
         <h2 class="govuk-heading-s">Evidence tracker</h2>
         <table class="govuk-table govuk-!-margin-bottom-6" aria-label="Evidence status">
-          <caption class="govuk-visually-hidden">Evidence items and their current status</caption>
+          <thead class="govuk-visually-hidden">
+            <tr>
+              <th scope="col" class="govuk-table__header">Document</th>
+              <th scope="col" class="govuk-table__header">Status</th>
+            </tr>
+          </thead>
           <tbody class="govuk-table__body">
             {% for item in evidenceItems %}
               <tr class="govuk-table__row">
-                <td class="govuk-table__cell govuk-body-s">{{ item.label }}</td>
-                <td class="govuk-table__cell govuk-table__cell--numeric">
+                <td class="govuk-table__cell">{{ item.label }}</td>
+                <td class="govuk-table__cell">
                   <strong class="govuk-tag {{ item.statusClass }}">{{ item.statusLabel }}</strong>
                 </td>
               </tr>
@@ -166,38 +161,24 @@
       {# Applicable policies #}
       {% if applicablePolicies.length > 0 %}
         <h2 class="govuk-heading-s">Applicable policies</h2>
-        <div class="app-policies govuk-!-margin-bottom-6">
-          {% for policy in applicablePolicies %}
-            <details class="govuk-details app-policy-details" {% if loop.index == 3 %}open{% endif %}>
-              <summary class="govuk-details__summary">
-                <span class="govuk-details__summary-text">
-                  {{ policy.policy_id }} — {{ policy.title }}
-                </span>
-              </summary>
-              <div class="govuk-details__text govuk-body-s">
-                {{ policy.body }}
-              </div>
-            </details>
-          {% endfor %}
-        </div>
+        {% for policy in applicablePolicies %}
+          <details class="govuk-details" {% if loop.index == 3 %}open{% endif %}>
+            <summary class="govuk-details__summary">
+              <span class="govuk-details__summary-text">{{ policy.policy_id }} — {{ policy.title }}</span>
+            </summary>
+            <div class="govuk-details__text">{{ policy.body }}</div>
+          </details>
+        {% endfor %}
       {% endif %}
 
       {# Quick actions #}
-      <h2 class="govuk-heading-s">Quick actions</h2>
-      <div class="app-quick-actions">
-        <button type="button" class="govuk-button govuk-button--warning app-quick-actions__btn">
-          Escalate case
-        </button>
-        <button type="button" class="govuk-button govuk-button--secondary app-quick-actions__btn">
-          Send reminder
-        </button>
-        <button type="button" class="govuk-button govuk-button--secondary app-quick-actions__btn">
-          Record evidence
-        </button>
-      </div>
+      <h2 class="govuk-heading-s govuk-!-margin-top-5">Quick actions</h2>
+      <button type="button" class="govuk-button govuk-!-width-full" data-module="govuk-button">Escalate case</button>
+      <button type="button" class="govuk-button govuk-button--secondary govuk-!-width-full" data-module="govuk-button">Send reminder</button>
+      <button type="button" class="govuk-button govuk-button--secondary govuk-!-width-full" data-module="govuk-button">Record evidence</button>
 
-    </div>{# end sidebar #}
+    </div>
 
-  </div>{# end grid row #}
+  </div>
 
 {% endblock %}

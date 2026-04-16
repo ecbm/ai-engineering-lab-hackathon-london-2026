@@ -50,12 +50,12 @@ function getEventDate(caseObj, eventType) {
  */
 function getDaysBadge(days) {
   if (days >= 56) {
-    return { label: `${days} days (overdue)`, cssClass: 'days-badge--overdue' };
+    return { label: `${days} days (overdue)`, cssClass: 'app-days-badge--overdue' };
   }
   if (days >= 28) {
-    return { label: `${days} days (warning)`, cssClass: 'days-badge--warning' };
+    return { label: `${days} days (warning)`, cssClass: 'app-days-badge--warning' };
   }
-  return { label: `${days} days`, cssClass: 'days-badge--ok' };
+  return { label: `${days} days`, cssClass: 'app-days-badge--ok' };
 }
 
 /**

@@ -1,26 +1,46 @@
 /* ==========================================================================
-   CaseTracker — Custom styles extending GOV.UK Frontend
-   WCAG 2.2 AA compliant
+   CaseTracker — Custom styles on top of govuk-frontend
+   GDS v6 colour palette · WCAG 2.2 AA
    ========================================================================== */
 
-/* Urgent action banner
+/* Font inheritance — ensure all custom elements and form controls use GDS Transport
    ========================================================================== */
 
-.app-urgent-banner {
-  border: 5px solid #d4351c;
-  background-color: #ffffff;
+[class^="app-"],
+[class*=" app-"],
+button,
+input,
+select,
+textarea,
+label {
+  font-family: "GDS Transport", arial, sans-serif;
+}
+
+/* Notification banner
+   ========================================================================== */
+
+.app-notification-banner {
+  border: 5px solid #ca3535;
+  padding: 0;
   margin-bottom: 30px;
+  background: #ffffff;
 }
 
-.app-urgent-banner__header {
-  background-color: #d4351c;
-  padding: 8px 15px;
+.app-notification-banner__header {
+  background: #ca3535;
   color: #ffffff;
+  padding: 8px 15px;
+  font-weight: 700;
+  font-size: 16px;
 }
 
-.app-urgent-banner__body {
+.app-notification-banner__body {
   padding: 15px;
 }
+
+.app-notification-banner__body p { margin: 0 0 5px; }
+.app-notification-banner__body ul { margin: 5px 0 0 20px; }
+.app-notification-banner__body li { margin-bottom: 5px; }
 
 /* Stats row
    ========================================================================== */
@@ -32,61 +52,72 @@
   margin-bottom: 30px;
 }
 
-.app-stat {
-  flex: 1 1 150px;
+.app-stat-box {
   background: #ffffff;
-  padding: 20px;
-  border-bottom: 5px solid #b1b4b6;
-  min-width: 120px;
+  padding: 15px 20px;
+  text-align: center;
+  border-bottom: 4px solid #1d70b8;
+  flex: 1;
+  min-width: 100px;
 }
 
-.app-stat--blue  { border-bottom-color: #1d70b8; }
-.app-stat--red   { border-bottom-color: #d4351c; }
-.app-stat--orange { border-bottom-color: #f47738; }
-.app-stat--green { border-bottom-color: #00703c; }
-
-.app-stat__number {
-  display: block;
-  font-size: 3rem;
+.app-stat-box__number {
+  font-size: 48px;
   font-weight: 700;
   line-height: 1;
-  margin-bottom: 5px;
 }
 
-.app-stat__label {
-  display: block;
-  font-size: 1rem;
-  color: #505a5f;
+.app-stat-box__label {
+  font-size: 16px;
+  color: #484949;
+  margin-top: 5px;
 }
+
+.app-stat-box--red    { border-bottom-color: #ca3535; }
+.app-stat-box--orange { border-bottom-color: #f47738; }
+.app-stat-box--green  { border-bottom-color: #0f7a52; }
+.app-stat-box--purple { border-bottom-color: #54319f; }
 
 /* Filter bar
    ========================================================================== */
 
 .app-filter-bar {
   background: #ffffff;
-  padding: 15px;
-  margin-bottom: 15px;
-  border: 1px solid #b1b4b6;
-}
-
-.app-filter-form {
+  padding: 15px 20px;
+  margin-bottom: 20px;
   display: flex;
+  gap: 15px;
+  align-items: end;
   flex-wrap: wrap;
-  gap: 15px;
-  align-items: flex-end;
 }
 
-.app-filter-form__field {
-  flex: 1 1 180px;
-  margin-bottom: 0;
-}
-
-.app-filter-form__actions {
+.app-filter-bar__field {
+  font-weight: 700;
+  font-size: 16px;
   display: flex;
-  align-items: center;
-  gap: 15px;
-  flex-shrink: 0;
-  padding-bottom: 4px;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.app-filter-bar select,
+.app-filter-bar input[type="text"] {
+  font-size: 16px;
+  padding: 8px 10px;
+  border: 2px solid #0b0c0c;
+  min-height: 44px;
+}
+
+.app-filter-bar input[type="text"] {
+  min-width: 220px;
+}
+
+.app-filter-bar__button {
+  align-self: end;
+}
+
+.app-filter-bar__clear {
+  align-self: end;
+  padding-bottom: 10px;
 }
 
 /* Days badge
@@ -94,203 +125,225 @@
 
 .app-days-badge {
   display: inline-block;
-  padding: 2px 8px;
+  padding: 2px 6px;
+  font-size: 14px;
+  font-weight: 700;
   border-radius: 2px;
-  font-size: 0.875rem;
-  font-weight: 400;
 }
 
 .app-days-badge--overdue {
-  background-color: #d4351c;
-  color: #ffffff;
+  background: #fcf5f5;
+  color: #982828;
 }
 
 .app-days-badge--warning {
-  background-color: #f47738;
-  color: #ffffff;
+  background: #fef8f5;
+  color: #7a3c1c;
 }
 
 .app-days-badge--ok {
-  background-color: transparent;
-  color: #505a5f;
+  color: #484949;
 }
 
-/* Alert banner (case detail)
+/* Warning callout
    ========================================================================== */
 
-.app-alert-banner {
-  border-left: 5px solid #d4351c;
-  background-color: #fef0ee;
+.app-warning-callout {
+  background: #fcf5f5;
+  border-left: 5px solid #ca3535;
   padding: 15px 20px;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 }
 
-.app-alert-banner--warning {
-  border-left-color: #f47738;
-  background-color: #fff7e6;
+.app-warning-callout--urgent {
+  border-left-color: #ca3535;
 }
 
-/* AI summary block
+.app-warning-callout__title {
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
+.app-warning-callout p {
+  margin: 0 0 5px;
+}
+
+.app-warning-callout p:last-child {
+  margin-bottom: 0;
+}
+
+/* AI summary
    ========================================================================== */
 
 .app-ai-summary {
-  border-left: 5px solid #4c2c92;
-  background-color: #f0f4f9;
+  background: #f6f5fa;
+  border-left: 5px solid #54319f;
   padding: 15px 20px;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 }
 
 .app-ai-summary__label {
-  display: block;
-  font-size: 0.75rem;
+  font-size: 14px;
   font-weight: 700;
-  letter-spacing: 0.05em;
   text-transform: uppercase;
-  color: #505a5f;
-  margin-bottom: 8px;
+  letter-spacing: 1px;
+  color: #3f2577;
+  margin-bottom: 5px;
+}
+
+.app-ai-summary p {
+  margin: 0 0 5px;
+}
+
+.app-ai-summary p:last-child {
+  margin-bottom: 0;
 }
 
 /* Workflow tracker
    ========================================================================== */
 
 .app-workflow-tracker {
-  overflow-x: auto;
-}
-
-.app-workflow-tracker__steps {
   display: flex;
+  margin-bottom: 30px;
+  overflow-x: auto;
   list-style: none;
-  margin: 0;
   padding: 0;
-  gap: 4px;
-  min-width: max-content;
 }
 
 .app-workflow-tracker__step {
-  flex: 1 1 auto;
-  min-width: 100px;
-  padding: 10px 12px;
-  font-size: 0.875rem;
-  font-weight: 700;
+  flex: 1;
   text-align: center;
-  border: 2px solid #b1b4b6;
-  background: #f3f2f1;
-  color: #505a5f;
+  padding: 14px 8px;
+  font-size: 14px;
+  font-weight: 700;
+  background: #f3f3f3;
+  border-right: 2px solid #ffffff;
+  color: #484949;
+  min-width: 100px;
 }
 
 .app-workflow-tracker__step--completed {
-  background: #f3f2f1;
-  border-color: #00703c;
-  color: #00703c;
+  background: #0f7a52;
+  color: #ffffff;
 }
 
 .app-workflow-tracker__step--current {
   background: #1d70b8;
-  border-color: #1d70b8;
   color: #ffffff;
 }
 
 .app-workflow-tracker__step--future {
-  background: #f3f2f1;
-  border-color: #b1b4b6;
-  color: #b1b4b6;
+  background: #f3f3f3;
+  color: #858686;
 }
 
-/* Required actions fieldset
+/* Actions checklist
    ========================================================================== */
 
 .app-actions-fieldset {
+  border: none;
+  padding: 0;
+  margin-bottom: 20px;
+}
+
+.app-actions-fieldset legend {
+  padding: 0;
+}
+
+.app-actions-list {
   background: #ffffff;
   padding: 15px 20px;
-  border: 1px solid #b1b4b6;
-  margin-bottom: 30px;
 }
 
-.app-action--completed {
+.app-action-label {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 10px 0;
+  border-bottom: 1px solid #cecece;
+  cursor: pointer;
+  min-height: 44px;
+}
+
+.app-action-label--last {
+  border-bottom: none;
+}
+
+.app-action-label input[type="checkbox"] {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  margin-top: 2px;
+  accent-color: #0f7a52;
+  cursor: pointer;
+}
+
+.app-action-completed {
   text-decoration: line-through;
-  color: #505a5f;
+  color: #484949;
 }
 
-/* Case timeline
+/* Timeline
    ========================================================================== */
 
 .app-timeline {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  border-left: 3px solid #b1b4b6;
-  margin-left: 12px;
+  position: relative;
+  padding-left: 30px;
   margin-bottom: 30px;
+  list-style: none;
+}
+
+.app-timeline::before {
+  content: '';
+  position: absolute;
+  left: 8px;
+  top: 8px;
+  bottom: 8px;
+  width: 3px;
+  background: #cecece;
 }
 
 .app-timeline__event {
   position: relative;
-  padding: 0 0 20px 25px;
+  margin-bottom: 20px;
 }
 
-.app-timeline__event:last-child {
-  padding-bottom: 0;
-}
-
-.app-timeline__bullet {
+.app-timeline__event::before {
+  content: '';
   position: absolute;
-  left: -14px;
-  top: 4px;
-  width: 22px;
-  height: 22px;
+  left: -26px;
+  top: 6px;
+  width: 14px;
+  height: 14px;
   border-radius: 50%;
   background: #1d70b8;
-  border: 3px solid #ffffff;
-  box-shadow: 0 0 0 2px #1d70b8;
+  border: 3px solid #f3f3f3;
 }
 
-.app-timeline__bullet--green {
-  background: #00703c;
-  box-shadow: 0 0 0 2px #00703c;
-}
-
-.app-timeline__bullet--blue {
-  background: #1d70b8;
-  box-shadow: 0 0 0 2px #1d70b8;
+.app-timeline__event--success::before {
+  background: #0f7a52;
 }
 
 .app-timeline__date {
+  font-size: 16px;
+  color: #484949;
+  font-weight: 700;
   display: block;
-  color: #505a5f;
-  margin-bottom: 4px;
 }
 
-.app-timeline__content {
-  padding-top: 0;
+.app-timeline__title {
+  font-size: 16px;
+  font-weight: 700;
+  margin: 2px 0;
 }
 
-/* Policy details
-   ========================================================================== */
-
-.app-policy-details {
-  margin-bottom: 5px;
+.app-timeline__description {
+  font-size: 16px;
+  color: #484949;
+  margin: 0;
 }
 
-.app-policy-details + .app-policy-details {
-  border-top: 1px solid #b1b4b6;
-}
-
-/* Quick actions
-   ========================================================================== */
-
-.app-quick-actions {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.app-quick-actions__btn {
-  width: 100%;
-  text-align: center;
-  margin-bottom: 0;
-}
-
-/* Responsive adjustments
+/* Responsive
    ========================================================================== */
 
 @media (max-width: 640px) {
@@ -298,26 +351,95 @@
     flex-direction: column;
   }
 
-  .app-filter-form {
+  .app-filter-bar {
     flex-direction: column;
-  }
-
-  .app-filter-form__field {
-    flex: 1 1 auto;
-    width: 100%;
-  }
-
-  .govuk-grid-column-two-thirds,
-  .govuk-grid-column-one-third {
-    width: 100%;
   }
 
   .app-workflow-tracker__step {
     min-width: 80px;
-    font-size: 0.75rem;
+    font-size: 12px;
     padding: 8px;
   }
 }
+
+/* Bar chart (team leader)
+   ========================================================================== */
+
+.app-bar-chart { width: 100%; border-collapse: collapse; margin-bottom: 30px; border: none; }
+.app-bar-chart th, .app-bar-chart td { border: none; padding: 4px 0; }
+.app-bar-chart tr:hover { background: transparent; }
+.app-bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+.app-bar-label { flex: 0 0 160px; font-size: 16px; font-weight: 700; text-align: right; }
+.app-bar-track { flex: 1; background: #f3f3f3; height: 28px; }
+.app-bar-fill { height: 100%; display: flex; align-items: center; padding-left: 8px; font-size: 14px; font-weight: 700; color: #ffffff; min-width: 28px; }
+.app-bar-fill--red { background: #ca3535; }
+.app-bar-fill--orange { background: #f47738; }
+.app-bar-fill--blue { background: #1d70b8; }
+.app-bar-fill--purple { background: #54319f; }
+.app-bar-fill--grey { background: #484949; }
+
+/* Risk labels
+   ========================================================================== */
+
+.app-risk-high { color: #982828; font-weight: 700; }
+.app-risk-medium { color: #7a3c1c; font-weight: 700; }
+
+/* Deadline cards
+   ========================================================================== */
+
+.app-deadline-card { background: #ffffff; padding: 15px 20px; margin-bottom: 10px; border-left: 5px solid #cecece; }
+.app-deadline-card--breach { border-left-color: #ca3535; background: #fcf5f5; }
+.app-deadline-card--warning { border-left-color: #f47738; background: #fef8f5; }
+.app-deadline-card__header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+.app-deadline-card__case { font-weight: 700; }
+.app-deadline-card__detail { font-size: 16px; color: #484949; margin-top: 4px; }
+
+/* Capacity cards
+   ========================================================================== */
+
+.app-capacity-row { display: flex; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; }
+.app-capacity-card { background: #ffffff; flex: 1; min-width: 200px; padding: 15px 20px; border-top: 4px solid #1d70b8; }
+.app-capacity-card__team { font-size: 19px; font-weight: 700; margin-bottom: 5px; }
+.app-capacity-card__count { font-size: 36px; font-weight: 700; line-height: 1; }
+.app-capacity-card__breakdown { font-size: 14px; color: #484949; margin-top: 5px; }
+.app-capacity-card--pressure { border-top-color: #ca3535; }
+
+/* Table responsive
+   ========================================================================== */
+
+.app-table-responsive { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 30px; }
+.app-table-responsive:focus { outline: 3px solid #ffdd00; }
+.app-table-responsive .govuk-table { margin-bottom: 0; }
+
+/* Applicant portal
+   ========================================================================== */
+
+.app-lookup-panel { background: #ffffff; padding: 30px; margin-bottom: 30px; max-width: 540px; }
+
+.app-status-banner { padding: 20px 25px; margin-bottom: 30px; }
+.app-status-banner--in-progress { background: #1d70b8; color: #ffffff; }
+.app-status-banner--closed { background: #0f7a52; color: #ffffff; }
+.app-status-banner__heading { font-size: 27px; font-weight: 700; margin-bottom: 5px; }
+.app-status-banner__body { font-size: 19px; }
+
+.app-step-list { list-style: none; padding: 0; margin: 0 0 30px; counter-reset: step; }
+.app-step-item { position: relative; padding: 15px 15px 15px 55px; border-bottom: 1px solid #cecece; min-height: 50px; }
+.app-step-item::before { content: counter(step); counter-increment: step; position: absolute; left: 0; top: 12px; width: 34px; height: 34px; border-radius: 50%; text-align: center; line-height: 34px; font-weight: 700; font-size: 16px; }
+.app-step-item--completed::before { background: #0f7a52; color: #ffffff; }
+.app-step-item--completed .app-step-item__label { color: #484949; }
+.app-step-item--current { background: #f4f8fb; }
+.app-step-item--current::before { background: #1d70b8; color: #ffffff; }
+.app-step-item--future::before { background: #f3f3f3; color: #858686; border: 2px solid #cecece; line-height: 30px; }
+.app-step-item--future .app-step-item__label { color: #858686; }
+.app-step-item__label { font-weight: 700; font-size: 19px; }
+
+.app-what-happens-next { background: #f4f8fb; border-left: 5px solid #1d70b8; padding: 20px; margin-bottom: 30px; }
+.app-what-happens-next p { margin: 0 0 10px; }
+.app-what-happens-next p:last-child { margin-bottom: 0; }
+
+.app-contact-box { background: #ffffff; border-top: 4px solid #1d70b8; padding: 20px; margin-bottom: 30px; }
+.app-contact-box p { margin: 0 0 8px; }
+.app-contact-box p:last-child { margin-bottom: 0; }
 
 /* Reduced motion
    ========================================================================== */
@@ -329,8 +451,4 @@
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
   }
-}
-
-.app-timeline__note {
-  color: #505a5f;
 }

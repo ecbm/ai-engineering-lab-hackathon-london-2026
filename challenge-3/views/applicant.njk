@@ -1,0 +1,141 @@
+{% extends "layout.njk" %}
+
+{% block content %}
+
+  {% if not lookedUp %}
+    {# LOOKUP FORM #}
+    <h1 class="govuk-heading-l">Check the status of your case</h1>
+    <p class="govuk-body">Use your case reference number and date of birth to see the current status of your case.</p>
+
+    <div class="app-lookup-panel">
+      <form method="post" action="/applicant" novalidate>
+
+        <div class="govuk-form-group {% if errors and errors.reference %}govuk-form-group--error{% endif %}">
+          <label class="govuk-label govuk-label--m" for="reference">Case reference number</label>
+          <div class="govuk-hint" id="ref-hint">This is on the letter or email we sent you, for example REF-77291</div>
+          {% if errors and errors.reference %}
+            <p class="govuk-error-message" id="ref-error"><span class="govuk-visually-hidden">Error:</span> {{ errors.reference }}</p>
+          {% endif %}
+          <input class="govuk-input {% if errors and errors.reference %}govuk-input--error{% endif %}"
+            id="reference" name="reference" type="text" spellcheck="false"
+            value="{{ values.reference if values else '' }}"
+            aria-describedby="ref-hint{% if errors and errors.reference %} ref-error{% endif %}"
+            {% if errors and errors.reference %}aria-invalid="true"{% endif %}>
+        </div>
+
+        <div class="govuk-form-group {% if errors and errors.dob %}govuk-form-group--error{% endif %}">
+          <label class="govuk-label govuk-label--m" for="dob">Date of birth</label>
+          <div class="govuk-hint" id="dob-hint">For example, 14 03 1985</div>
+          {% if errors and errors.dob %}
+            <p class="govuk-error-message" id="dob-error"><span class="govuk-visually-hidden">Error:</span> {{ errors.dob }}</p>
+          {% endif %}
+          <input class="govuk-input govuk-input--width-10 {% if errors and errors.dob %}govuk-input--error{% endif %}"
+            id="dob" name="dob" type="text" inputmode="numeric" spellcheck="false"
+            placeholder="DD MM YYYY"
+            value="{{ values.dob if values else '' }}"
+            aria-describedby="dob-hint{% if errors and errors.dob %} dob-error{% endif %}"
+            {% if errors and errors.dob %}aria-invalid="true"{% endif %}>
+        </div>
+
+        <button type="submit" class="govuk-button govuk-!-margin-top-3" data-module="govuk-button">Check status</button>
+      </form>
+    </div>
+
+  {% elif notFound %}
+    {# NOT FOUND #}
+    <a href="/applicant" class="govuk-back-link">Back to search</a>
+    <h1 class="govuk-heading-l">Case not found</h1>
+    <p class="govuk-body">We could not find a case matching the details you entered. Check your reference number and try again.</p>
+    <a href="/applicant" class="govuk-button govuk-button--secondary" data-module="govuk-button">Try again</a>
+
+  {% else %}
+    {# STATUS RESULT #}
+    <a href="/applicant" class="govuk-back-link">Back to search</a>
+
+    <div class="app-status-banner app-status-banner--{{ 'closed' if case.status == 'closed' else 'in-progress' }}" role="region" aria-label="Current case status">
+      <div class="app-status-banner__heading">{{ statusMessage.heading }}</div>
+      <div class="app-status-banner__body">{{ statusMessage.body }}</div>
+    </div>
+
+    <h1 class="govuk-heading-l">Case status</h1>
+    <p class="govuk-body-s">Reference: {{ case.applicant.reference }} &middot; Case: {{ case.case_id }} &middot; Last updated: {{ case.last_updated | formatDate }}</p>
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+
+        {# What you need to do #}
+        {% if case.status == 'awaiting_evidence' %}
+          <section class="app-what-happens-next" aria-label="What you need to do">
+            <h2 class="govuk-heading-m govuk-!-margin-bottom-2">What you need to do</h2>
+            <p>We have asked you for documents. If you have already sent them, allow 5 working days for us to process documents received by post.</p>
+            <p>If you have not sent them yet, please send them as soon as possible to avoid delays to your case.</p>
+          </section>
+        {% endif %}
+
+        {# Progress steps #}
+        <h2 class="govuk-heading-m">Case progress</h2>
+        <ol class="app-step-list" aria-label="Case progress steps">
+          {% for step in workflowSteps %}
+            <li class="app-step-item app-step-item--{{ step.stepStatus }}" {% if step.stepStatus == 'current' %}aria-current="step"{% endif %}>
+              <div class="app-step-item__label">{{ step.label }}</div>
+            </li>
+          {% endfor %}
+        </ol>
+
+        {# Documents #}
+        {% if evidenceItems.length > 0 %}
+          <h2 class="govuk-heading-m">Your documents</h2>
+          <table class="govuk-table" aria-label="Document status">
+            <thead class="govuk-visually-hidden"><tr><th scope="col" class="govuk-table__header">Document</th><th scope="col" class="govuk-table__header">Status</th></tr></thead>
+            <tbody class="govuk-table__body">
+              {% for item in evidenceItems %}
+                <tr class="govuk-table__row">
+                  <td class="govuk-table__cell">{{ item.label }}</td>
+                  <td class="govuk-table__cell"><strong class="govuk-tag {{ item.statusClass }}">{{ item.statusLabel }}</strong></td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        {% endif %}
+
+      </div>
+
+      <div class="govuk-grid-column-one-third">
+
+        {# Your details #}
+        <h2 class="govuk-heading-s">Your details</h2>
+        <dl class="govuk-summary-list govuk-!-margin-bottom-6">
+          <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key">Name</dt><dd class="govuk-summary-list__value">{{ case.applicant.name }}</dd></div>
+          <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key">Reference</dt><dd class="govuk-summary-list__value">{{ case.applicant.reference }}</dd></div>
+          <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key">Case type</dt><dd class="govuk-summary-list__value">{{ case.case_type | caseTypeLabel }}</dd></div>
+          <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key">Date opened</dt><dd class="govuk-summary-list__value">{{ case.created_date | formatDate }}</dd></div>
+        </dl>
+
+        {# Contact #}
+        <div class="app-contact-box">
+          <h2 class="govuk-heading-s govuk-!-margin-bottom-2">Need help?</h2>
+          <p>If any of your details are wrong or you need to tell us about a change, contact us.</p>
+          <p><strong>Phone:</strong> 0800 123 4567</p>
+          <p><strong>Email:</strong> casework@example.gov.uk</p>
+          <p class="govuk-body-s">Lines are open Monday to Friday, 9am to 5pm.</p>
+        </div>
+
+        {# Updates timeline #}
+        <h2 class="govuk-heading-s">Updates</h2>
+        <ol class="app-timeline" aria-label="Case updates">
+          {% for event in timeline %}
+            <li class="app-timeline__event {% if event.event == 'case_created' %}app-timeline__event--success{% endif %}">
+              <time class="app-timeline__date" datetime="{{ event.date }}">{{ event.date | formatDate }}</time>
+              <p class="app-timeline__title">{{ event.event | eventLabel }}</p>
+              {% if event.note %}
+                <p class="app-timeline__description">{{ event.note }}</p>
+              {% endif %}
+            </li>
+          {% endfor %}
+        </ol>
+
+      </div>
+    </div>
+  {% endif %}
+
+{% endblock %}
