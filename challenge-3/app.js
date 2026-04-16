@@ -65,7 +65,8 @@ nunjucksEnv.addFilter('eventLabel', (event) => {
     consultation_opened: 'Consultation opened',
     pending_decision: 'Pending decision',
     escalated: 'Escalated',
-    closed: 'Closed'
+    closed: 'Closed',
+    note_added: 'Note added'
   };
   return labels[event] || event.replace(/_/g, ' ');
 });
@@ -101,6 +102,8 @@ app.locals.aiSummaries = aiSummaries;
 // Routes
 app.use('/api', require('./routes/api'));
 app.use('/case', require('./routes/cases'));
+app.use('/submit', require('./routes/submit'));
+app.use('/team-leader', require('./routes/team-leader'));
 app.use('/', require('./routes/dashboard'));
 
 // 404 handler

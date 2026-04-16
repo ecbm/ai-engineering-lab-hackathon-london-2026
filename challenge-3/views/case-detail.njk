@@ -105,9 +105,22 @@
       {# Case notes #}
       <h2 class="govuk-heading-m govuk-!-margin-top-6">Case notes</h2>
       <div class="govuk-inset-text">
-        <p class="govuk-body govuk-!-margin-bottom-2">{{ case.case_notes }}</p>
+        <p class="govuk-body govuk-!-margin-bottom-2" style="white-space: pre-wrap">{{ case.case_notes }}</p>
       </div>
-      <button type="button" class="govuk-button govuk-button--secondary">Add case note</button>
+      <details class="govuk-details">
+        <summary class="govuk-details__summary">
+          <span class="govuk-details__summary-text">Add a case note</span>
+        </summary>
+        <div class="govuk-details__text">
+          <form method="POST" action="/case/{{ case.case_id }}/note">
+            <div class="govuk-form-group">
+              <label class="govuk-label" for="note">Note</label>
+              <textarea class="govuk-textarea" id="note" name="note" rows="4"></textarea>
+            </div>
+            <button type="submit" class="govuk-button govuk-button--secondary govuk-!-margin-bottom-0">Save note</button>
+          </form>
+        </div>
+      </details>
 
     </div>{# end main column #}
 
@@ -185,15 +198,46 @@
       {# Quick actions #}
       <h2 class="govuk-heading-s">Quick actions</h2>
       <div class="app-quick-actions">
-        <button type="button" class="govuk-button govuk-button--warning app-quick-actions__btn">
-          Escalate case
-        </button>
+
+        {# Progress case #}
+        {% if case.status != 'closed' and allowedTransitions.length > 0 %}
+          <form method="POST" action="/case/{{ case.case_id }}/progress" style="margin-bottom: 10px">
+            {% if allowedTransitions.length > 1 %}
+              <div class="govuk-form-group govuk-!-margin-bottom-2">
+                <label class="govuk-label govuk-body-s" for="next_state">Progress to</label>
+                <select class="govuk-select govuk-!-width-full" id="next_state" name="next_state">
+                  {% for t in allowedTransitions %}
+                    <option value="{{ t }}">{{ t | statusLabel }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            {% else %}
+              <input type="hidden" name="next_state" value="{{ allowedTransitions[0] }}">
+            {% endif %}
+            <button type="submit" class="govuk-button app-quick-actions__btn govuk-!-margin-bottom-0">
+              {% if allowedTransitions.length == 1 %}
+                Progress to {{ allowedTransitions[0] | statusLabel }}
+              {% else %}
+                Progress case
+              {% endif %}
+            </button>
+          </form>
+        {% endif %}
+
+        {# Escalate case #}
+        {% if case.status != 'escalated' and case.status != 'closed' %}
+          <form method="POST" action="/case/{{ case.case_id }}/escalate" style="margin-bottom: 10px">
+            <button type="submit" class="govuk-button govuk-button--warning app-quick-actions__btn govuk-!-margin-bottom-0">
+              Escalate case
+            </button>
+          </form>
+        {% endif %}
+
+        {# Send reminder — UI only, no email service in prototype #}
         <button type="button" class="govuk-button govuk-button--secondary app-quick-actions__btn">
           Send reminder
         </button>
-        <button type="button" class="govuk-button govuk-button--secondary app-quick-actions__btn">
-          Record evidence
-        </button>
+
       </div>
 
     </div>{# end sidebar #}

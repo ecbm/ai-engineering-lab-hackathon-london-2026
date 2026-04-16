@@ -1,0 +1,46 @@
+{% extends "layout.njk" %}
+
+{% block content %}
+
+  <div class="govuk-panel govuk-panel--confirmation">
+    <h1 class="govuk-panel__title">Case submitted</h1>
+    <div class="govuk-panel__body">
+      Your reference number<br>
+      <strong>{{ case.applicant.reference }}</strong>
+    </div>
+  </div>
+
+  <p class="govuk-body">We have received your case.</p>
+  <p class="govuk-body govuk-!-margin-bottom-1"><strong>Case ID:</strong> {{ case.case_id }}</p>
+  <p class="govuk-body"><strong>Type:</strong> {{ caseTypeLabel }}</p>
+
+  <h2 class="govuk-heading-m">What happens next</h2>
+  <p class="govuk-body">A caseworker will be assigned to your case and will contact you if any further information is needed.</p>
+  <p class="govuk-body">Keep your reference number safe — you will need it to check the status of your case.</p>
+
+  <h2 class="govuk-heading-m">Evidence you may need to provide</h2>
+  {% if case.case_type == 'benefit_review' %}
+    <ul class="govuk-list govuk-list--bullet">
+      <li>Proof of address</li>
+      <li>Income statement covering the last 3 months</li>
+      <li>Signed declaration</li>
+    </ul>
+  {% elif case.case_type == 'licence_application' %}
+    <ul class="govuk-list govuk-list--bullet">
+      <li>Proof of identity</li>
+      <li>Site plan or premises details</li>
+      <li>Supporting documentation relevant to the licence type</li>
+    </ul>
+  {% elif case.case_type == 'compliance_check' %}
+    <ul class="govuk-list govuk-list--bullet">
+      <li>Requested trading or operational records</li>
+      <li>Staff qualification certificates</li>
+      <li>Any other documentation requested by the caseworker</li>
+    </ul>
+  {% endif %}
+
+  <p class="govuk-body govuk-!-margin-top-4">
+    <a href="/" class="govuk-link">Return to caseworker dashboard</a>
+  </p>
+
+{% endblock %}

@@ -1,0 +1,111 @@
+{% extends "layout.njk" %}
+
+{% block content %}
+
+  <h1 class="govuk-heading-xl">Submit a case</h1>
+
+  {% if errors.length > 0 %}
+    <div class="govuk-error-summary" data-module="govuk-error-summary">
+      <div role="alert">
+        <h2 class="govuk-error-summary__title">There is a problem</h2>
+        <div class="govuk-error-summary__body">
+          <ul class="govuk-list govuk-error-summary__list">
+            {% for error in errors %}
+              <li><a href="#{{ error.field }}">{{ error.text }}</a></li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+
+  <form method="POST" action="/submit" novalidate>
+
+    {# Applicant name #}
+    {% set nameError = null %}
+    {% for e in errors %}{% if e.field == 'name' %}{% set nameError = e.text %}{% endif %}{% endfor %}
+    <div class="govuk-form-group {% if nameError %}govuk-form-group--error{% endif %}">
+      <label class="govuk-label govuk-label--m" for="name">
+        Applicant name
+      </label>
+      <div class="govuk-hint">For organisations, enter the full registered name</div>
+      {% if nameError %}
+        <p class="govuk-error-message" id="name-error"><span class="govuk-visually-hidden">Error:</span> {{ nameError }}</p>
+      {% endif %}
+      <input class="govuk-input {% if nameError %}govuk-input--error{% endif %}" id="name" name="name"
+        type="text" autocomplete="name" spellcheck="false"
+        value="{{ values.name }}"
+        aria-describedby="{% if nameError %}name-error{% endif %}">
+    </div>
+
+    {# Date of birth #}
+    <div class="govuk-form-group">
+      <label class="govuk-label govuk-label--m" for="date_of_birth">
+        Date of birth <span class="govuk-hint" style="display:inline">(optional — leave blank for organisations)</span>
+      </label>
+      <div class="govuk-hint">For example, 14 3 1985</div>
+      <input class="govuk-input govuk-input--width-10" id="date_of_birth" name="date_of_birth"
+        type="text" autocomplete="bday" placeholder="DD MM YYYY"
+        value="{{ values.date_of_birth }}">
+    </div>
+
+    {# Case type #}
+    {% set typeError = null %}
+    {% for e in errors %}{% if e.field == 'case_type' %}{% set typeError = e.text %}{% endif %}{% endfor %}
+    <div class="govuk-form-group {% if typeError %}govuk-form-group--error{% endif %}">
+      <fieldset class="govuk-fieldset" aria-describedby="{% if typeError %}case_type-error{% endif %}">
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+          <h2 class="govuk-fieldset__heading">Case type</h2>
+        </legend>
+        {% if typeError %}
+          <p class="govuk-error-message" id="case_type-error"><span class="govuk-visually-hidden">Error:</span> {{ typeError }}</p>
+        {% endif %}
+        <div class="govuk-radios">
+          <div class="govuk-radios__item">
+            <input class="govuk-radios__input" id="case_type-benefit" name="case_type" type="radio"
+              value="benefit_review" {% if values.case_type == 'benefit_review' %}checked{% endif %}>
+            <label class="govuk-label govuk-radios__label" for="case_type-benefit">
+              Benefit review
+            </label>
+            <div class="govuk-hint govuk-radios__hint">Review of benefit entitlement following a change of circumstances</div>
+          </div>
+          <div class="govuk-radios__item">
+            <input class="govuk-radios__input" id="case_type-licence" name="case_type" type="radio"
+              value="licence_application" {% if values.case_type == 'licence_application' %}checked{% endif %}>
+            <label class="govuk-label govuk-radios__label" for="case_type-licence">
+              Licence application
+            </label>
+            <div class="govuk-hint govuk-radios__hint">New or renewal application for a licence or permit</div>
+          </div>
+          <div class="govuk-radios__item">
+            <input class="govuk-radios__input" id="case_type-compliance" name="case_type" type="radio"
+              value="compliance_check" {% if values.case_type == 'compliance_check' %}checked{% endif %}>
+            <label class="govuk-label govuk-radios__label" for="case_type-compliance">
+              Compliance check
+            </label>
+            <div class="govuk-hint govuk-radios__hint">Scheduled or triggered regulatory compliance inspection</div>
+          </div>
+        </div>
+      </fieldset>
+    </div>
+
+    {# Description #}
+    {% set descError = null %}
+    {% for e in errors %}{% if e.field == 'description' %}{% set descError = e.text %}{% endif %}{% endfor %}
+    <div class="govuk-form-group {% if descError %}govuk-form-group--error{% endif %}">
+      <label class="govuk-label govuk-label--m" for="description">
+        Description of circumstances
+      </label>
+      <div class="govuk-hint">Briefly describe why you are submitting this case</div>
+      {% if descError %}
+        <p class="govuk-error-message" id="description-error"><span class="govuk-visually-hidden">Error:</span> {{ descError }}</p>
+      {% endif %}
+      <textarea class="govuk-textarea {% if descError %}govuk-textarea--error{% endif %}" id="description" name="description"
+        rows="5" aria-describedby="{% if descError %}description-error{% endif %}">{{ values.description }}</textarea>
+    </div>
+
+    <button type="submit" class="govuk-button">Submit case</button>
+
+  </form>
+
+{% endblock %}

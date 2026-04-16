@@ -1,0 +1,178 @@
+{% extends "layout.njk" %}
+
+{% block content %}
+
+  <h1 class="govuk-heading-xl">Team leader overview</h1>
+
+  {# Action required banner #}
+  {% if actionRequired.length > 0 %}
+    <div class="notification-banner--custom" role="alert" aria-label="Cases requiring team leader action">
+      <div class="notification-banner--custom__header">Cases requiring your action</div>
+      <div class="notification-banner--custom__body">
+        <p class="govuk-body-s govuk-!-margin-bottom-1"><strong>{{ actionRequired.length }} case{{ 's' if actionRequired.length != 1 }} need{{ '' if actionRequired.length != 1 else 's' }} team leader input:</strong></p>
+        <ul class="govuk-list govuk-list--bullet govuk-body-s govuk-!-margin-bottom-0">
+          {% for c in actionRequired %}
+            <li>
+              <a href="/case/{{ c.case_id }}" class="govuk-link">{{ c.case_id }}</a>
+              — {{ c.applicant.name }}
+              {% if c.status == 'escalated' %}
+                — escalated{% if c.escalationStatus %}, evidence outstanding {{ c.escalationStatus.days }} days{% endif %}
+              {% elif c.status == 'pending_decision' %}
+                — pending decision, draft awaiting sign-off
+              {% endif %}
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  {% endif %}
+
+  {# Headline stats #}
+  <section aria-label="Caseload summary statistics">
+    <h2 class="govuk-heading-m">Caseload at a glance</h2>
+    <div class="stats-row">
+      <div class="stat-box">
+        <span class="stat-box__number">{{ stats.total }}</span>
+        <span class="stat-box__label">Total active</span>
+      </div>
+      <div class="stat-box stat-box--red">
+        <span class="stat-box__number">{{ stats.escalated }}</span>
+        <span class="stat-box__label">Escalated</span>
+      </div>
+      <div class="stat-box stat-box--orange">
+        <span class="stat-box__number">{{ stats.overdue }}</span>
+        <span class="stat-box__label">Overdue</span>
+      </div>
+      <div class="stat-box stat-box--purple">
+        <span class="stat-box__number">{{ stats.pending_decision }}</span>
+        <span class="stat-box__label">Pending decision</span>
+      </div>
+      <div class="stat-box stat-box--green">
+        <span class="stat-box__number">{{ stats.closed }}</span>
+        <span class="stat-box__label">Closed</span>
+      </div>
+    </div>
+  </section>
+
+  {# Status bar chart #}
+  <section aria-label="Cases by status">
+    <h2 class="govuk-heading-m">Cases by status</h2>
+    <table class="bar-chart" aria-label="Cases by status breakdown">
+      <thead class="govuk-visually-hidden">
+        <tr><th scope="col">Status</th><th scope="col">Count</th></tr>
+      </thead>
+      <tbody>
+        {% for row in barChartData %}
+          <tr class="bar-row">
+            <th scope="row" class="bar-label">{{ row.label }}</th>
+            <td class="bar-track">
+              {% if row.count > 0 %}
+                <div class="bar-fill {{ row.cls }}"
+                  style="width: {{ (row.count / maxCount * 100) | round }}%"
+                  role="presentation">{{ row.count }}</div>
+              {% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </section>
+
+  {# Team capacity #}
+  <section aria-label="Team capacity">
+    <h2 class="govuk-heading-m">Team capacity</h2>
+    <div class="capacity-row">
+      {% for t in teams %}
+        <div class="capacity-card {% if t.underPressure %}capacity-card--pressure{% endif %}">
+          <div class="capacity-card__team">
+            {{ t.team | teamLabel }}
+            {% if t.underPressure %}
+              <strong class="govuk-tag govuk-tag--red" style="font-size:12px;vertical-align:middle">Under pressure</strong>
+            {% endif %}
+          </div>
+          <div class="capacity-card__count">{{ t.count }} case{{ 's' if t.count != 1 }}</div>
+          <div class="capacity-card__breakdown">{{ t.breakdown }}</div>
+        </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  {# Deadline risks #}
+  {% if deadlineRisks.length > 0 %}
+    <section aria-label="Deadline risks">
+      <h2 class="govuk-heading-m">Deadline risks</h2>
+      {% for c in deadlineRisks %}
+        <div class="deadline-card {% if c.escalationStatus.status == 'overdue' %}deadline-card--breach{% else %}deadline-card--warning{% endif %}">
+          <div class="deadline-card__header">
+            <span class="deadline-card__case">
+              <a href="/case/{{ c.case_id }}" class="govuk-link">{{ c.case_id }}</a> — {{ c.applicant.name }}
+            </span>
+            {% if c.escalationStatus.status == 'overdue' %}
+              <strong class="govuk-tag govuk-tag--red">Breach</strong>
+            {% else %}
+              <strong class="govuk-tag govuk-tag--orange">Approaching</strong>
+            {% endif %}
+          </div>
+          <p class="deadline-card__detail">
+            Evidence outstanding {{ c.escalationStatus.days }} days.
+            {% if c.escalationStatus.status == 'overdue' %}
+              {{ c.escalationStatus.escalationDays }}-day escalation threshold breached.
+            {% else %}
+              {{ c.escalationStatus.reminderDays }}-day reminder threshold reached.
+            {% endif %}
+          </p>
+        </div>
+      {% endfor %}
+    </section>
+  {% endif %}
+
+  {# All cases table #}
+  <section aria-label="Full case list">
+    <h2 class="govuk-heading-m">All cases</h2>
+    <div class="table-responsive" tabindex="0" role="region" aria-label="Scrollable case list">
+      <table class="govuk-table" aria-label="All cases">
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header">Case ID</th>
+            <th scope="col" class="govuk-table__header">Applicant</th>
+            <th scope="col" class="govuk-table__header">Type</th>
+            <th scope="col" class="govuk-table__header">Status</th>
+            <th scope="col" class="govuk-table__header">Team</th>
+            <th scope="col" class="govuk-table__header">Days since update</th>
+            <th scope="col" class="govuk-table__header">Risk</th>
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+          {% for c in allCases %}
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell">
+                <a href="/case/{{ c.case_id }}" class="govuk-link">{{ c.case_id }}</a>
+              </td>
+              <td class="govuk-table__cell">{{ c.applicant.name }}</td>
+              <td class="govuk-table__cell">{{ c.case_type | caseTypeLabel }}</td>
+              <td class="govuk-table__cell">
+                <strong class="govuk-tag {{ c.status | statusTagClass }}">{{ c.status | statusLabel }}</strong>
+              </td>
+              <td class="govuk-table__cell">{{ c.assigned_to | teamLabel }}</td>
+              <td class="govuk-table__cell">
+                <span class="days-badge {{ c.daysBadge.cssClass }}">{{ c.daysBadge.label }}</span>
+              </td>
+              <td class="govuk-table__cell">
+                {% if c.status == 'escalated' or (c.escalationStatus and c.escalationStatus.status == 'overdue') %}
+                  <span class="risk-high" aria-label="High risk">High</span>
+                {% elif c.escalationStatus and c.escalationStatus.status == 'warning' %}
+                  <span class="risk-medium" aria-label="Medium risk">Medium</span>
+                {% elif c.status == 'closed' %}
+                  <span aria-label="Not applicable">—</span>
+                {% else %}
+                  <span aria-label="Low risk">Low</span>
+                {% endif %}
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+{% endblock %}
