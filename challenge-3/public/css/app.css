@@ -1,0 +1,336 @@
+/* ==========================================================================
+   CaseTracker — Custom styles extending GOV.UK Frontend
+   WCAG 2.2 AA compliant
+   ========================================================================== */
+
+/* Urgent action banner
+   ========================================================================== */
+
+.app-urgent-banner {
+  border: 5px solid #d4351c;
+  background-color: #ffffff;
+  margin-bottom: 30px;
+}
+
+.app-urgent-banner__header {
+  background-color: #d4351c;
+  padding: 8px 15px;
+  color: #ffffff;
+}
+
+.app-urgent-banner__body {
+  padding: 15px;
+}
+
+/* Stats row
+   ========================================================================== */
+
+.app-stats-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.app-stat {
+  flex: 1 1 150px;
+  background: #ffffff;
+  padding: 20px;
+  border-bottom: 5px solid #b1b4b6;
+  min-width: 120px;
+}
+
+.app-stat--blue  { border-bottom-color: #1d70b8; }
+.app-stat--red   { border-bottom-color: #d4351c; }
+.app-stat--orange { border-bottom-color: #f47738; }
+.app-stat--green { border-bottom-color: #00703c; }
+
+.app-stat__number {
+  display: block;
+  font-size: 3rem;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 5px;
+}
+
+.app-stat__label {
+  display: block;
+  font-size: 1rem;
+  color: #505a5f;
+}
+
+/* Filter bar
+   ========================================================================== */
+
+.app-filter-bar {
+  background: #ffffff;
+  padding: 15px;
+  margin-bottom: 15px;
+  border: 1px solid #b1b4b6;
+}
+
+.app-filter-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  align-items: flex-end;
+}
+
+.app-filter-form__field {
+  flex: 1 1 180px;
+  margin-bottom: 0;
+}
+
+.app-filter-form__actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  flex-shrink: 0;
+  padding-bottom: 4px;
+}
+
+/* Days badge
+   ========================================================================== */
+
+.app-days-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 2px;
+  font-size: 0.875rem;
+  font-weight: 400;
+}
+
+.app-days-badge--overdue {
+  background-color: #d4351c;
+  color: #ffffff;
+}
+
+.app-days-badge--warning {
+  background-color: #f47738;
+  color: #ffffff;
+}
+
+.app-days-badge--ok {
+  background-color: transparent;
+  color: #505a5f;
+}
+
+/* Alert banner (case detail)
+   ========================================================================== */
+
+.app-alert-banner {
+  border-left: 5px solid #d4351c;
+  background-color: #fef0ee;
+  padding: 15px 20px;
+  margin-bottom: 30px;
+}
+
+.app-alert-banner--warning {
+  border-left-color: #f47738;
+  background-color: #fff7e6;
+}
+
+/* AI summary block
+   ========================================================================== */
+
+.app-ai-summary {
+  border-left: 5px solid #4c2c92;
+  background-color: #f0f4f9;
+  padding: 15px 20px;
+  margin-bottom: 30px;
+}
+
+.app-ai-summary__label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #505a5f;
+  margin-bottom: 8px;
+}
+
+/* Workflow tracker
+   ========================================================================== */
+
+.app-workflow-tracker {
+  overflow-x: auto;
+}
+
+.app-workflow-tracker__steps {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 4px;
+  min-width: max-content;
+}
+
+.app-workflow-tracker__step {
+  flex: 1 1 auto;
+  min-width: 100px;
+  padding: 10px 12px;
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-align: center;
+  border: 2px solid #b1b4b6;
+  background: #f3f2f1;
+  color: #505a5f;
+}
+
+.app-workflow-tracker__step--completed {
+  background: #f3f2f1;
+  border-color: #00703c;
+  color: #00703c;
+}
+
+.app-workflow-tracker__step--current {
+  background: #1d70b8;
+  border-color: #1d70b8;
+  color: #ffffff;
+}
+
+.app-workflow-tracker__step--future {
+  background: #f3f2f1;
+  border-color: #b1b4b6;
+  color: #b1b4b6;
+}
+
+/* Required actions fieldset
+   ========================================================================== */
+
+.app-actions-fieldset {
+  background: #ffffff;
+  padding: 15px 20px;
+  border: 1px solid #b1b4b6;
+  margin-bottom: 30px;
+}
+
+.app-action--completed {
+  text-decoration: line-through;
+  color: #505a5f;
+}
+
+/* Case timeline
+   ========================================================================== */
+
+.app-timeline {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border-left: 3px solid #b1b4b6;
+  margin-left: 12px;
+  margin-bottom: 30px;
+}
+
+.app-timeline__event {
+  position: relative;
+  padding: 0 0 20px 25px;
+}
+
+.app-timeline__event:last-child {
+  padding-bottom: 0;
+}
+
+.app-timeline__bullet {
+  position: absolute;
+  left: -14px;
+  top: 4px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #1d70b8;
+  border: 3px solid #ffffff;
+  box-shadow: 0 0 0 2px #1d70b8;
+}
+
+.app-timeline__bullet--green {
+  background: #00703c;
+  box-shadow: 0 0 0 2px #00703c;
+}
+
+.app-timeline__bullet--blue {
+  background: #1d70b8;
+  box-shadow: 0 0 0 2px #1d70b8;
+}
+
+.app-timeline__date {
+  display: block;
+  color: #505a5f;
+  margin-bottom: 4px;
+}
+
+.app-timeline__content {
+  padding-top: 0;
+}
+
+/* Policy details
+   ========================================================================== */
+
+.app-policy-details {
+  margin-bottom: 5px;
+}
+
+.app-policy-details + .app-policy-details {
+  border-top: 1px solid #b1b4b6;
+}
+
+/* Quick actions
+   ========================================================================== */
+
+.app-quick-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.app-quick-actions__btn {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 0;
+}
+
+/* Responsive adjustments
+   ========================================================================== */
+
+@media (max-width: 640px) {
+  .app-stats-row {
+    flex-direction: column;
+  }
+
+  .app-filter-form {
+    flex-direction: column;
+  }
+
+  .app-filter-form__field {
+    flex: 1 1 auto;
+    width: 100%;
+  }
+
+  .govuk-grid-column-two-thirds,
+  .govuk-grid-column-one-third {
+    width: 100%;
+  }
+
+  .app-workflow-tracker__step {
+    min-width: 80px;
+    font-size: 0.75rem;
+    padding: 8px;
+  }
+}
+
+/* Reduced motion
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+.app-timeline__note {
+  color: #505a5f;
+}
