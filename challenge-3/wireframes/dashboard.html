@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Caseworker Dashboard — CaseTracker</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+.stats-row { display: flex; gap: 15px; margin-bottom: 30px; flex-wrap: wrap; }
+.stat-box { background: #fff; padding: 15px 20px; text-align: center; border-bottom: 4px solid #1d70b8; flex: 1; min-width: 120px; }
+.stat-box__number { font-size: 48px; font-weight: 700; line-height: 1; }
+.stat-box__label { font-size: 16px; color: #505a5f; margin-top: 5px; }
+.stat-box--red { border-bottom-color: #d4351c; }
+.stat-box--orange { border-bottom-color: #b84c00; }
+.stat-box--green { border-bottom-color: #00703c; }
+.filter-bar { background: #fff; padding: 15px 20px; margin-bottom: 20px; display: flex; gap: 15px; align-items: end; flex-wrap: wrap; }
+.filter-bar label { font-weight: 700; font-size: 16px; display: flex; flex-direction: column; gap: 5px; }
+.filter-bar select, .filter-bar input[type="text"] { font-size: 16px; padding: 8px 10px; border: 2px solid #0b0c0c; min-height: 44px; }
+.filter-bar input[type="text"] { min-width: 220px; }
+.case-row { cursor: pointer; }
+.case-row:hover { background: #e8f0fe; }
+.case-row:focus-within { outline: 3px solid #ffdd00; outline-offset: -3px; }
+.case-link { color: #1d70b8; font-weight: 700; text-decoration: underline; }
+.case-link:focus-visible { outline: 3px solid #ffdd00; box-shadow: 0 0 0 3px #ffdd00, 0 0 0 6px #0b0c0c; background: #ffdd00; color: #0b0c0c; }
+.days-badge { display: inline-block; padding: 2px 6px; font-size: 14px; font-weight: 700; border-radius: 2px; }
+.days-badge--overdue { background: #fef0ee; color: #942514; }
+.days-badge--warning { background: #fff7f0; color: #6e3619; }
+.days-badge--ok { color: #505a5f; }
+.notification-banner { border: 5px solid #d4351c; padding: 0; margin-bottom: 30px; background: #fff; }
+.notification-banner__header { background: #d4351c; color: #fff; padding: 8px 15px; font-weight: 700; font-size: 16px; }
+.notification-banner__body { padding: 15px; }
+.notification-banner__body p { margin: 0 0 5px; }
+.notification-banner__body ul { margin: 5px 0 0 20px; }
+.notification-banner__body li { margin-bottom: 3px; }
+</style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<header class="govuk-header" role="banner">
+<div class="govuk-header__container">
+<a href="dashboard.html" class="govuk-header__logo" aria-current="page">CaseTracker</a>
+<nav class="govuk-header__nav" aria-label="Main navigation">
+<a href="dashboard.html" aria-current="page">Dashboard</a>
+<a href="team-leader.html">Team view</a>
+</nav>
+</div>
+</header>
+
+<div class="govuk-width-container">
+<main id="main-content" class="govuk-main-wrapper" role="main">
+
+<h1 class="govuk-heading-l">Your cases</h1>
+
+<!-- URGENT NOTIFICATION -->
+<div class="notification-banner" role="alert" aria-label="Urgent cases requiring attention">
+<div class="notification-banner__header">Action required</div>
+<div class="notification-banner__body">
+<p><strong>2 cases need urgent attention:</strong></p>
+<ul>
+<li><a href="case-view.html">CASE-2026-00042</a> — evidence overdue by 73 days, escalation threshold breached</li>
+<li><a href="case-view.html">CASE-2026-00214</a> — evidence overdue by 64 days, already escalated</li>
+</ul>
+</div>
+</div>
+
+<!-- STATS -->
+<div class="stats-row" aria-label="Case summary statistics" role="region">
+<div class="stat-box">
+<div class="stat-box__number">10</div>
+<div class="stat-box__label">Total cases</div>
+</div>
+<div class="stat-box stat-box--red">
+<div class="stat-box__number">2</div>
+<div class="stat-box__label">Escalated</div>
+</div>
+<div class="stat-box stat-box--orange">
+<div class="stat-box__number">3</div>
+<div class="stat-box__label">Awaiting evidence</div>
+</div>
+<div class="stat-box stat-box--green">
+<div class="stat-box__number">1</div>
+<div class="stat-box__label">Closed</div>
+</div>
+</div>
+
+<!-- FILTERS -->
+<form class="filter-bar" role="search" aria-label="Filter cases">
+<label>
+Search
+<input type="text" placeholder="Name, case ID, or reference" aria-label="Search by name, case ID, or reference" id="search-input">
+</label>
+<label>
+Status
+<select id="filter-status" aria-label="Filter by status">
+<option value="">All statuses</option>
+<option value="awaiting_evidence">Awaiting evidence</option>
+<option value="under_review">Under review</option>
+<option value="pending_decision">Pending decision</option>
+<option value="escalated">Escalated</option>
+<option value="closed">Closed</option>
+</select>
+</label>
+<label>
+Case type
+<select id="filter-type" aria-label="Filter by case type">
+<option value="">All types</option>
+<option value="benefit_review">Benefit review</option>
+<option value="licence_application">Licence application</option>
+<option value="compliance_check">Compliance check</option>
+</select>
+</label>
+<button type="button" class="govuk-button" style="margin:0;align-self:end" onclick="filterCases()">Apply filters</button>
+</form>
+
+<!-- CASE TABLE -->
+<table class="govuk-table" aria-label="Case list">
+<thead>
+<tr>
+<th scope="col">Case ID</th>
+<th scope="col">Applicant</th>
+<th scope="col">Type</th>
+<th scope="col">Status</th>
+<th scope="col">Last updated</th>
+<th scope="col">Days since update</th>
+</tr>
+</thead>
+<tbody id="case-tbody">
+<!-- Populated by JS -->
+</tbody>
+</table>
+
+</main>
+</div>
+
+<footer class="govuk-footer" role="contentinfo">
+<div class="govuk-footer__meta"><p>Hackathon prototype — Challenge 3: Supporting casework decisions</p></div>
+</footer>
+
+<script>
+var cases = [
+  { case_id:"CASE-2026-00042", case_type:"benefit_review", status:"awaiting_evidence", name:"Jordan Smith", reference:"REF-77291", last_updated:"2026-03-28", created:"2026-01-10" },
+  { case_id:"CASE-2026-00091", case_type:"licence_application", status:"under_review", name:"Aisha Okafor", reference:"REF-88102", last_updated:"2026-03-30", created:"2026-02-14" },
+  { case_id:"CASE-2026-00107", case_type:"compliance_check", status:"escalated", name:"Meridian Care Solutions Ltd", reference:"REF-90034", last_updated:"2026-04-01", created:"2026-01-28" },
+  { case_id:"CASE-2026-00133", case_type:"benefit_review", status:"pending_decision", name:"Callum Rafferty", reference:"REF-66210", last_updated:"2026-04-02", created:"2026-02-01" },
+  { case_id:"CASE-2026-00158", case_type:"benefit_review", status:"awaiting_evidence", name:"Priya Mehta", reference:"REF-71049", last_updated:"2026-03-05", created:"2026-02-28" },
+  { case_id:"CASE-2026-00172", case_type:"licence_application", status:"closed", name:"The Old Crown Ltd", reference:"REF-81773", last_updated:"2026-02-28", created:"2026-01-05" },
+  { case_id:"CASE-2026-00199", case_type:"compliance_check", status:"awaiting_evidence", name:"Greenfield Training Academy", reference:"REF-94421", last_updated:"2026-03-18", created:"2026-03-15" },
+  { case_id:"CASE-2026-00214", case_type:"benefit_review", status:"escalated", name:"Marcus Okonkwo", reference:"REF-55887", last_updated:"2026-01-20", created:"2025-11-10" },
+  { case_id:"CASE-2026-00231", case_type:"licence_application", status:"pending_decision", name:"Riverside Events Ltd", reference:"REF-79003", last_updated:"2026-04-01", created:"2026-02-20" },
+  { case_id:"CASE-2026-00248", case_type:"compliance_check", status:"under_review", name:"Hartwood Construction plc", reference:"REF-62190", last_updated:"2026-04-03", created:"2026-03-01" }
+];
+
+var TODAY = new Date("2026-04-16");
+
+var STATUS_MAP = {
+  awaiting_evidence: { label:"Awaiting evidence", cls:"govuk-tag--orange" },
+  under_review: { label:"Under review", cls:"govuk-tag--blue" },
+  pending_decision: { label:"Pending decision", cls:"govuk-tag--purple" },
+  escalated: { label:"Escalated", cls:"govuk-tag--red" },
+  closed: { label:"Closed", cls:"govuk-tag--grey" },
+  case_created: { label:"Created", cls:"" }
+};
+
+var TYPE_MAP = {
+  benefit_review: "Benefit review",
+  licence_application: "Licence application",
+  compliance_check: "Compliance check"
+};
+
+function daysSince(dateStr) {
+  var d = new Date(dateStr);
+  return Math.floor((TODAY - d) / (1000*60*60*24));
+}
+
+function renderCases(filtered) {
+  var tbody = document.getElementById("case-tbody");
+  tbody.innerHTML = "";
+  // Sort: escalated first, then by days since update descending
+  filtered.sort(function(a,b) {
+    if (a.status === "escalated" && b.status !== "escalated") return -1;
+    if (b.status === "escalated" && a.status !== "escalated") return 1;
+    return daysSince(a.last_updated) > daysSince(b.last_updated) ? -1 : 1;
+  });
+  filtered.forEach(function(c) {
+    var days = daysSince(c.last_updated);
+    var s = STATUS_MAP[c.status] || { label: c.status, cls:"" };
+    var daysCls = days > 56 ? "days-badge--overdue" : days > 28 ? "days-badge--warning" : "days-badge--ok";
+    var daysLabel = days > 56 ? days + " days (overdue)" : days > 28 ? days + " days (warning)" : days + " days";
+    var tr = document.createElement("tr");
+    tr.className = "case-row";
+    tr.innerHTML =
+      '<td><a href="case-view.html" class="case-link">' + c.case_id + '</a></td>' +
+      '<td>' + c.name + '</td>' +
+      '<td>' + TYPE_MAP[c.case_type] + '</td>' +
+      '<td><span class="govuk-tag ' + s.cls + '">' + s.label + '</span></td>' +
+      '<td>' + formatDate(c.last_updated) + '</td>' +
+      '<td><span class="days-badge ' + daysCls + '">' + daysLabel + '</span></td>';
+    tbody.appendChild(tr);
+  });
+  if (filtered.length === 0) {
+    var tr = document.createElement("tr");
+    tr.innerHTML = '<td colspan="6">No cases match your filters.</td>';
+    tbody.appendChild(tr);
+  }
+}
+
+function formatDate(dateStr) {
+  var d = new Date(dateStr);
+  var months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  return d.getDate() + " " + months[d.getMonth()] + " " + d.getFullYear();
+}
+
+function filterCases() {
+  var search = document.getElementById("search-input").value.toLowerCase();
+  var status = document.getElementById("filter-status").value;
+  var type = document.getElementById("filter-type").value;
+  var filtered = cases.filter(function(c) {
+    if (search && c.name.toLowerCase().indexOf(search) === -1 && c.case_id.toLowerCase().indexOf(search) === -1 && c.reference.toLowerCase().indexOf(search) === -1) return false;
+    if (status && c.status !== status) return false;
+    if (type && c.case_type !== type) return false;
+    return true;
+  });
+  renderCases(filtered);
+  // Announce result count for screen readers
+  var liveRegion = document.getElementById("live-results");
+  if (!liveRegion) {
+    liveRegion = document.createElement("div");
+    liveRegion.id = "live-results";
+    liveRegion.setAttribute("aria-live", "polite");
+    liveRegion.setAttribute("role", "status");
+    liveRegion.className = "visually-hidden";
+    document.body.appendChild(liveRegion);
+  }
+  liveRegion.textContent = filtered.length + " case" + (filtered.length !== 1 ? "s" : "") + " found.";
+}
+
+// Initial render
+renderCases(cases);
+
+// Allow Enter on search
+document.getElementById("search-input").addEventListener("keydown", function(e) {
+  if (e.key === "Enter") { e.preventDefault(); filterCases(); }
+});
+</script>
+</body>
+</html>
